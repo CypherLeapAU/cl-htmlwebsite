@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CypherLeap — Palette Comparison</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { font-family: 'DM Sans', system-ui, sans-serif; background: #0a0a0a; color: #fff; }
+  .page-header {
+    padding: 48px 32px 24px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .page-header h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 42px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  .page-header p {
+    color: rgba(255,255,255,0.6);
+    font-size: 16px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .option {
+    padding: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .option-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 32px;
+    background: #000;
+    color: #fff;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .option-label .swatches {
+    display: flex;
+    gap: 6px;
+  }
+  .swatch {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+
+  /* Mock hero shell */
+  .hero {
+    min-height: 620px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 48px;
+    padding: 72px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-content h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 64px;
+    line-height: 1.05;
+    font-weight: 400;
+    letter-spacing: -0.025em;
+    margin-bottom: 24px;
+  }
+  .hero-content h2 em { font-style: italic; }
+  .hero-content .eyebrow {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-weight: 600;
+    margin-bottom: 20px;
+    opacity: 0.7;
+  }
+  .hero-content p {
+    font-size: 18px;
+    line-height: 1.55;
+    max-width: 520px;
+    margin-bottom: 32px;
+    opacity: 0.8;
+  }
+  .cta-row { display: flex; gap: 12px; margin-bottom: 40px; }
+  .btn {
+    padding: 14px 24px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .logo-lockup {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  .logo-mark {
+    width: 44px; height: 44px;
+    position: relative;
+  }
+  .logo-text {
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: 0.02em;
+  }
+  .logo-text span { font-weight: 400; opacity: 0.85; }
+
+  /* Right panel mock cards */
+  .hero-visual {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: center;
+  }
+  .stat-card {
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid;
+  }
+  .stat-card .num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 42px;
+    line-height: 1;
+    margin-bottom: 8px;
+    font-weight: 400;
+  }
+  .stat-card .lbl {
+    font-size: 13px;
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .trust-row {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding-top: 24px;
+    border-top: 1px solid;
+    font-size: 13px;
+    opacity: 0.6;
+    letter-spacing: 0.04em;
+  }
+
+  /* ============ OPTION 1: Deep Navy + Purple ============ */
+  .opt1 .hero {
+    background: #0B1020;
+    color: #F8FAFC;
+  }
+  .opt1 .hero::before {
+    content: "";
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(168,85,247,0.25) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .opt1 .eyebrow { color: #A855F7; opacity: 1; }
+  .opt1 h2 em { color: transparent; background: linear-gradient(90deg, #A855F7, #EC4899); -webkit-background-clip: text; background-clip: text; }
+  .opt1 .btn-primary {
+    background: linear-gradient(90deg, #A855F7, #EC4899);
+    color: #fff;
+  }
+  .opt1 .btn-ghost {
+    background: transparent;
+    color: #F8FAFC;
+    border-color: rgba(248,250,252,0.2);
+  }
+  .opt1 .stat-card { background: #151B33; border-color: rgba(168,85,247,0.15); }
+  .opt1 .trust-row { border-color: rgba(255,255,255,0.1); }
+
+  /* ============ OPTION 2: Charcoal + Subtle Violet ============ */
+  .opt2 .hero {
+    background: #1A1A1F;
+    color: #F5F5F7;
+  }
+  .opt2 .eyebrow { color: #9333EA; opacity: 1; }
+  .opt2 h2 em { color: #C084FC; font-style: italic; }
+  .opt2 .btn-primary {
+    background: #9333EA;
+    color: #fff;
+  }
+  .opt2 .btn-ghost {
+    background: transparent;
+    color: #F5F5F7;
+    border-color: rgba(245,245,247,0.15);
+  }
+  .opt2 .stat-card { background: #2A2A33; border-color: rgba(147,51,234,0.18); }
+  .opt2 .trust-row { border-color: rgba(255,255,255,0.08); }
+
+  /* ============ OPTION 3: Ivory + Deep Plum ============ */
+  .opt3 .hero {
+    background: #FAFAF7;
+    color: #1A1A1F;
+  }
+  .opt3 .eyebrow { color: #4C1D6B; opacity: 1; }
+  .opt3 h2 em { color: transparent; background: linear-gradient(90deg, #4C1D6B, #EC4899); -webkit-background-clip: text; background-clip: text; font-style: italic; }
+  .opt3 h2 { color: #1A1A1F; }
+  .opt3 p { color: #4A4A55; opacity: 1; }
+  .opt3 .btn-primary {
+    background: #4C1D6B;
+    color: #fff;
+  }
+  .opt3 .btn-ghost {
+    background: transparent;
+    color: #1A1A1F;
+    border-color: rgba(26,26,31,0.18);
+  }
+  .opt3 .stat-card { background: #fff; border-color: rgba(76,29,107,0.12); color: #1A1A1F; }
+  .opt3 .stat-card .num { color: #4C1D6B; }
+  .opt3 .stat-card .lbl { color: #4A4A55; opacity: 1; }
+  .opt3 .trust-row { border-color: rgba(26,26,31,0.1); color: #4A4A55; opacity: 1; }
+  .opt3 .logo-text { color: #1A1A1F; }
+
+  /* ============ OPTION 4: Midnight + Gradient Hero ============ */
+  .opt4 .hero {
+    background: #0A0E27;
+    color: #fff;
+    position: relative;
+  }
+  .opt4 .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(124,58,237,0.35) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 60%, rgba(236,72,153,0.28) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 90%, rgba(249,115,22,0.18) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .opt4 .hero > * { position: relative; z-index: 1; }
+  .opt4 .eyebrow { color: #C084FC; opacity: 1; }
+  .opt4 h2 em { color: transparent; background: linear-gradient(90deg, #C084FC, #EC4899, #F97316); -webkit-background-clip: text; background-clip: text; font-style: italic; }
+  .opt4 .btn-primary {
+    background: linear-gradient(90deg, #7C3AED, #EC4899);
+    color: #fff;
+  }
+  .opt4 .btn-ghost {
+    background: rgba(255,255,255,0.05);
+    color: #fff;
+    border-color: rgba(255,255,255,0.18);
+    backdrop-filter: blur(8px);
+  }
+  .opt4 .stat-card {
+    background: rgba(17, 21, 56, 0.7);
+    border-color: rgba(192,132,252,0.22);
+    backdrop-filter: blur(8px);
+  }
+  .opt4 .trust-row { border-color: rgba(255,255,255,0.1); }
+
+  /* Logo SVG shared */
+  .logo-mark svg { display: block; width: 100%; height: 100%; }
+
+  /* Rationale cards under each option */
+  .rationale {
+    padding: 24px 64px 48px;
+    background: #000;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .rationale div h4 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .rationale div p {
+    font-size: 14px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.85);
+  }
+
+  @media (max-width: 960px) {
+    .hero { grid-template-columns: 1fr; padding: 48px 28px; gap: 32px; min-height: auto; }
+    .hero-content h2 { font-size: 42px; }
+    .rationale { grid-template-columns: 1fr; padding: 24px 28px 40px; }
+    .page-header h1 { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>CypherLeap — Palette Comparison</h1>
+  <p>Four directions for the background palette paired with your purple-magenta logo. Each preview uses the same hero copy and layout so you can judge the palette itself, not the content.</p>
+</div>
+
+<!-- ============ OPTION 1 ============ -->
+<section class="option opt1">
+  <div class="option-label">
+    <span>Option 1 — Deep Navy + Purple Accent&nbsp; <em style="opacity:.6; font-weight:400; text-transform:none; letter-spacing:0;">(McKinsey / Deloitte feel)</em></span>
+    <div class="swatches">
+      <div class="swatch" style="background:#0B1020"></div>
+      <div class="swatch" style="background:#151B33"></div>
+      <div class="swatch" style="background:#A855F7"></div>
+      <div class="swatch" style="background:#EC4899"></div>
+      <div class="swatch" style="background:#F8FAFC"></div>
+    </div>
+  </div>
+  <div class="hero">
+    <div class="hero-content">
+      <div class="logo-lockup">
+        <div class="logo-mark">
+          <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#A855F7"/><stop offset="1" stop-color="#EC4899"/></linearGradient></defs>
+            <circle cx="22" cy="22" r="18" fill="url(#g1)"/>
+            <path d="M15 22 L22 29 L30 18" stroke="#0B1020" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M30 18 L30 14 M30 18 L34 18" stroke="#0B1020" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="logo-text">CYPHER<span>LEAP</span></span>
+      </div>
+      <div class="eyebrow">Managed Cybersecurity · Sydney</div>
+      <h2>Cybersecurity that <em>lets you leap</em> forward.</h2>
+      <p>Virtual CISO, Managed GRC, SIEM, and penetration testing for Australian mid-market businesses navigating Essential Eight, ISO 27001, and APRA CPS 234.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary">Book a security review</a>
+        <a class="btn btn-ghost">Explore services →</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="stat-card"><div class="num">24/7</div><div class="lbl">SOC monitoring</div></div>
+      <div class="stat-card"><div class="num">ISO 27001</div><div class="lbl">Certified delivery</div></div>
+      <div class="stat-card"><div class="num">48hr</div><div class="lbl">Incident response SLA</div></div>
+      <div class="trust-row"><span>Essential 8</span><span>APRA CPS 234</span><span>IRAP</span><span>PCI DSS 4.0</span></div>
+    </div>
+  </div>
+  <div class="rationale">
+    <div><h4>Why this works</h4><p>Near-black navy gives the authority that Big 4 / McKinsey sites lean on, and makes the logo's purple-magenta gradient the undisputed visual anchor.</p></div>
+    <div><h4>Watch out for</h4><p>Can feel "typical cybersecurity" if the accent is over-applied. Gradient should be reserved for CTAs, hero emphasis words, and key stat numbers.</p></div>
+    <div><h4>Best fit</h4><p>You want maximum trust signals for risk-averse buyers (CFOs, boards, financial services). Closest aligned with CyberCX / Sekuro but more distinctive.</p></div>
+  </div>
+</section>
+
+<!-- ============ OPTION 2 ============ -->
+<section class="option opt2">
+  <div class="option-label">
+    <span>Option 2 — Charcoal + Subtle Violet&nbsp; <em style="opacity:.6; font-weight:400; text-transform:none; letter-spacing:0;">(KPMG / EY feel)</em></span>
+    <div class="swatches">
+      <div class="swatch" style="background:#1A1A1F"></div>
+      <div class="swatch" style="background:#2A2A33"></div>
+      <div class="swatch" style="background:#9333EA"></div>
+      <div class="swatch" style="background:#C084FC"></div>
+      <div class="swatch" style="background:#F5F5F7"></div>
+    </div>
+  </div>
+  <div class="hero">
+    <div class="hero-content">
+      <div class="logo-lockup">
+        <div class="logo-mark">
+          <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#A855F7"/><stop offset="1" stop-color="#EC4899"/></linearGradient></defs>
+            <circle cx="22" cy="22" r="18" fill="url(#g2)"/>
+            <path d="M15 22 L22 29 L30 18" stroke="#1A1A1F" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M30 18 L30 14 M30 18 L34 18" stroke="#1A1A1F" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="logo-text">CYPHER<span>LEAP</span></span>
+      </div>
+      <div class="eyebrow">Managed Cybersecurity · Sydney</div>
+      <h2>Cybersecurity that <em>lets you leap</em> forward.</h2>
+      <p>Virtual CISO, Managed GRC, SIEM, and penetration testing for Australian mid-market businesses navigating Essential Eight, ISO 27001, and APRA CPS 234.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary">Book a security review</a>
+        <a class="btn btn-ghost">Explore services →</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="stat-card"><div class="num">24/7</div><div class="lbl">SOC monitoring</div></div>
+      <div class="stat-card"><div class="num">ISO 27001</div><div class="lbl">Certified delivery</div></div>
+      <div class="stat-card"><div class="num">48hr</div><div class="lbl">Incident response SLA</div></div>
+      <div class="trust-row"><span>Essential 8</span><span>APRA CPS 234</span><span>IRAP</span><span>PCI DSS 4.0</span></div>
+    </div>
+  </div>
+  <div class="rationale">
+    <div><h4>Why this works</h4><p>Quieter and more consultancy-like. The violet recedes, letting copy and certifications carry the weight — a restrained, "grown-up" read.</p></div>
+    <div><h4>Watch out for</h4><p>Loses some of the logo's energy. The brand personality (gradient, arrow, forward momentum) gets muted in exchange for gravitas.</p></div>
+    <div><h4>Best fit</h4><p>You want to position as a boutique advisory firm rather than a product-forward cyber brand. Under-selling your visual identity slightly.</p></div>
+  </div>
+</section>
+
+<!-- ============ OPTION 3 ============ -->
+<section class="option opt3">
+  <div class="option-label">
+    <span>Option 3 — Ivory + Deep Plum&nbsp; <em style="opacity:.6; font-weight:400; text-transform:none; letter-spacing:0;">(PwC / Bain light feel)</em></span>
+    <div class="swatches">
+      <div class="swatch" style="background:#FAFAF7"></div>
+      <div class="swatch" style="background:#FFFFFF"></div>
+      <div class="swatch" style="background:#4C1D6B"></div>
+      <div class="swatch" style="background:#EC4899"></div>
+      <div class="swatch" style="background:#1A1A1F"></div>
+    </div>
+  </div>
+  <div class="hero">
+    <div class="hero-content">
+      <div class="logo-lockup">
+        <div class="logo-mark">
+          <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#A855F7"/><stop offset="1" stop-color="#EC4899"/></linearGradient></defs>
+            <circle cx="22" cy="22" r="18" fill="url(#g3)"/>
+            <path d="M15 22 L22 29 L30 18" stroke="#FAFAF7" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M30 18 L30 14 M30 18 L34 18" stroke="#FAFAF7" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="logo-text">CYPHER<span>LEAP</span></span>
+      </div>
+      <div class="eyebrow">Managed Cybersecurity · Sydney</div>
+      <h2>Cybersecurity that <em>lets you leap</em> forward.</h2>
+      <p>Virtual CISO, Managed GRC, SIEM, and penetration testing for Australian mid-market businesses navigating Essential Eight, ISO 27001, and APRA CPS 234.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary">Book a security review</a>
+        <a class="btn btn-ghost">Explore services →</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="stat-card"><div class="num">24/7</div><div class="lbl">SOC monitoring</div></div>
+      <div class="stat-card"><div class="num">ISO 27001</div><div class="lbl">Certified delivery</div></div>
+      <div class="stat-card"><div class="num">48hr</div><div class="lbl">Incident response SLA</div></div>
+      <div class="trust-row"><span>Essential 8</span><span>APRA CPS 234</span><span>IRAP</span><span>PCI DSS 4.0</span></div>
+    </div>
+  </div>
+  <div class="rationale">
+    <div><h4>Why this works</h4><p>Stands apart from every Australian cyber competitor (they're all dark). Feels approachable, editorial, and "consultancy" rather than "security vendor."</p></div>
+    <div><h4>Watch out for</h4><p>Light backgrounds read as less "technical" in cyber. You'll need strong typography, real photography, and proof to avoid looking generic.</p></div>
+    <div><h4>Best fit</h4><p>You want to be the outlier that looks confident enough not to hide behind dark mode. Harder to execute well but highest ceiling for differentiation.</p></div>
+  </div>
+</section>
+
+<!-- ============ OPTION 4 ============ -->
+<section class="option opt4">
+  <div class="option-label">
+    <span>Option 4 — Midnight + Gradient Hero&nbsp; <em style="opacity:.6; font-weight:400; text-transform:none; letter-spacing:0;">(Stickman / Sekuro feel)</em></span>
+    <div class="swatches">
+      <div class="swatch" style="background:#0A0E27"></div>
+      <div class="swatch" style="background:#111538"></div>
+      <div class="swatch" style="background:#7C3AED"></div>
+      <div class="swatch" style="background:#EC4899"></div>
+      <div class="swatch" style="background:#F97316"></div>
+    </div>
+  </div>
+  <div class="hero">
+    <div class="hero-content">
+      <div class="logo-lockup">
+        <div class="logo-mark">
+          <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="g4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#A855F7"/><stop offset="1" stop-color="#EC4899"/></linearGradient></defs>
+            <circle cx="22" cy="22" r="18" fill="url(#g4)"/>
+            <path d="M15 22 L22 29 L30 18" stroke="#0A0E27" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M30 18 L30 14 M30 18 L34 18" stroke="#0A0E27" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="logo-text">CYPHER<span>LEAP</span></span>
+      </div>
+      <div class="eyebrow">Managed Cybersecurity · Sydney</div>
+      <h2>Cybersecurity that <em>lets you leap</em> forward.</h2>
+      <p>Virtual CISO, Managed GRC, SIEM, and penetration testing for Australian mid-market businesses navigating Essential Eight, ISO 27001, and APRA CPS 234.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary">Book a security review</a>
+        <a class="btn btn-ghost">Explore services →</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="stat-card"><div class="num">24/7</div><div class="lbl">SOC monitoring</div></div>
+      <div class="stat-card"><div class="num">ISO 27001</div><div class="lbl">Certified delivery</div></div>
+      <div class="stat-card"><div class="num">48hr</div><div class="lbl">Incident response SLA</div></div>
+      <div class="trust-row"><span>Essential 8</span><span>APRA CPS 234</span><span>IRAP</span><span>PCI DSS 4.0</span></div>
+    </div>
+  </div>
+  <div class="rationale">
+    <div><h4>Why this works</h4><p>High-energy, competitor-aligned. The ambient gradient plays directly off the logo's colors — the whole hero feels intentional and branded.</p></div>
+    <div><h4>Watch out for</h4><p>Closest to Stickman Cyber / Sekuro visually, so differentiation leans on copy and content. Can feel "startup" rather than "advisory."</p></div>
+    <div><h4>Best fit</h4><p>You want the site to feel modern and energetic, targeting founders/CTOs more than CFOs. Most on-brand to the logo itself.</p></div>
+  </div>
+</section>
+
+<footer style="padding:32px; text-align:center; background:#000; color:rgba(255,255,255,0.5); font-size:13px;">
+  Scroll through all four and let me know your pick — I'll apply it to the full website once you drop the HTML and logo files into the folder.
+</footer>
+
+</body>
+</html>

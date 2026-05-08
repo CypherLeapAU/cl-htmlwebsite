@@ -1,0 +1,2153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CypherLeap — Managed Cybersecurity for High-Growth Companies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+/* Ivory + Deep Plum palette */
+--ivory:#FAFAF7;--ivory-deep:#F2EFE8;--ivory-card:#FFFFFF;
+--plum:#4C1D6B;--plum-light:#6B2E8F;--plum-dark:#3A1553;
+--magenta:#EC4899;--magenta-soft:#F5C3DF;
+--ink:#1A1A1F;--ink-soft:#3A3A45;--ink-mute:#5A5A6A;--ink-faint:#8A8A95;
+--line:rgba(26,26,31,.08);--line-soft:rgba(26,26,31,.05);
+/* Legacy aliases — remapped to new palette so existing class names keep working */
+--navy:var(--ivory);--navy-light:var(--ivory-deep);--navy-mid:#EDE9E2;--navy-card:var(--ivory-card);
+--teal:var(--plum);--teal-dim:var(--plum-light);--teal-glow:rgba(76,29,107,.08);--teal-bg:rgba(76,29,107,.03);
+--blue:#3b82f6;--purple:var(--magenta);--amber:#f59e0b;--rose:#f43f5e;
+--white:var(--ink);--gray:var(--ink-mute);--gray-light:var(--ink-soft);--gray-dark:var(--ink-faint);
+--font-body:'DM Sans',sans-serif;--font-display:'Instrument Serif',serif;
+--max-w:1240px;--section-pad:clamp(72px,9vw,120px);
+--radius:14px;--card-border:1px solid var(--line);
+--brand-gradient:linear-gradient(90deg,var(--plum),var(--magenta));
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--navy);color:var(--white);font-family:var(--font-body);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+/* Utility */
+.container{max-width:var(--max-w);margin:0 auto;padding:0 clamp(20px,4vw,48px)}
+.section{padding:var(--section-pad) 0}
+.section-alt{background:var(--navy-light)}
+.eyebrow{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);font-weight:600;margin-bottom:12px}
+.section-title{font-family:var(--font-display);font-size:clamp(2rem,4.2vw,3.4rem);line-height:1.12;font-weight:400}
+.section-title em{font-style:italic;color:var(--teal)}
+.section-sub{color:var(--gray);font-size:1.05rem;line-height:1.7;max-width:620px;margin-top:16px}
+.section-header{margin-bottom:48px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 30px;border-radius:6px;font-weight:600;font-size:.92rem;transition:all .3s;cursor:pointer;border:none;font-family:var(--font-body)}
+.btn-primary{background:var(--teal);color:var(--navy)}
+.btn-primary:hover{background:#6B2E8F;transform:translateY(-2px);box-shadow:0 8px 30px rgba(76,29,107,.2)}
+.btn-outline{background:transparent;border:1.5px solid rgba(26,26,31,.18);color:var(--white)}
+.btn-outline:hover{border-color:var(--teal);color:var(--teal)}
+.btn-sm{padding:10px 22px;font-size:.85rem}
+.btn svg{width:16px;height:16px;transition:transform .3s}
+.btn:hover svg{transform:translateX(3px)}
+.arrow-icon{width:16px;height:16px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+
+/* Nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;transition:background .4s,backdrop-filter .4s}
+nav.scrolled{background:rgba(250,250,247,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(26,26,31,.06)}
+.nav-inner{max-width:var(--max-w);margin:0 auto;padding:0 clamp(20px,4vw,48px);display:flex;align-items:center;justify-content:space-between;height:72px}
+.logo{display:inline-flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
+.logo-img{height:32px;width:auto;display:block}
+.footer-about .logo-img{height:28px}
+.logo-mark{width:34px;height:34px;flex-shrink:0}
+.logo-mark svg{width:100%;height:100%;display:block}
+.logo-wordmark{font-family:var(--font-body);font-size:1.02rem;font-weight:700;letter-spacing:.05em;color:var(--ink);text-transform:uppercase;line-height:1;white-space:nowrap}
+.logo-wordmark span{font-weight:400;opacity:.9}
+.nav-links{display:flex;gap:8px;align-items:center}
+.nav-link{font-size:.85rem;font-weight:500;color:var(--gray-light);transition:color .3s;padding:8px 14px;border-radius:6px;cursor:pointer;position:relative}
+.nav-link:hover,.nav-link.active{color:var(--teal)}
+.nav-link.has-sub::after{content:'';display:inline-block;width:4px;height:4px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);margin-left:4px;margin-bottom:2px}
+
+/* Dropdown */
+.nav-dropdown{position:relative}
+.dropdown-menu{position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(8px);background:var(--navy-light);border:var(--card-border);border-radius:12px;padding:12px;min-width:220px;opacity:0;visibility:hidden;transition:all .25s;pointer-events:none;z-index:100;box-shadow:0 20px 60px rgba(26,26,31,.1)}
+.nav-dropdown:hover .dropdown-menu{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.dropdown-menu a{display:block;padding:10px 14px;font-size:.85rem;color:var(--gray-light);border-radius:8px;transition:all .2s}
+.dropdown-menu a:hover{background:var(--teal-glow);color:var(--teal)}
+.nav-cta{display:inline-flex;align-items:center;gap:6px;padding:10px 22px;background:var(--teal);color:var(--navy);border-radius:5px;font-weight:600;font-size:.85rem;transition:all .3s;cursor:pointer;margin-left:12px}
+.nav-cta:hover{background:#6B2E8F;transform:translateY(-1px)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:8px}
+.hamburger span{width:24px;height:2px;background:var(--white);border-radius:2px}
+
+/* Page System */
+.page{display:none;padding-top:72px;min-height:100vh}
+.page.active{display:block}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:72px}
+.hero::before{content:'';position:absolute;top:-20%;right:-10%;width:700px;height:700px;background:radial-gradient(circle,rgba(76,29,107,.07) 0%,transparent 70%);pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:40px;border:1px solid rgba(76,29,107,.2);background:rgba(76,29,107,.05);margin-bottom:24px;font-size:.8rem;color:var(--teal);font-weight:500}
+.hero-badge .dot{width:6px;height:6px;background:var(--teal);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{font-family:var(--font-display);font-size:clamp(2.6rem,5.2vw,4rem);line-height:1.08;font-weight:400;margin-bottom:22px}
+.hero h1 em{font-style:italic;color:var(--teal)}
+.hero-sub{font-size:1.08rem;line-height:1.75;color:var(--gray);max-width:540px;margin-bottom:36px}
+.hero-buttons{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:48px}
+.hero-stats{display:flex;gap:44px}
+.hero-stat{border-left:2px solid var(--teal);padding-left:16px}
+.hero-stat .num{font-family:var(--font-display);font-size:1.9rem;color:var(--white)}
+.hero-stat .label{font-size:.75rem;color:var(--gray);margin-top:2px}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center}
+.hero-visual{position:relative;display:flex;justify-content:center}
+.hero-graphic{width:100%;max-width:460px;aspect-ratio:1;position:relative}
+.orbit{position:absolute;top:50%;left:50%;border:1px solid rgba(76,29,107,.08);border-radius:50%;animation:spin 45s linear infinite}
+.orbit:nth-child(1){width:260px;height:260px;margin:-130px 0 0 -130px}
+.orbit:nth-child(2){width:380px;height:380px;margin:-190px 0 0 -190px;animation-duration:60s;animation-direction:reverse}
+.orbit:nth-child(3){width:460px;height:460px;margin:-230px 0 0 -230px;animation-duration:80s}
+.orbit-dot{position:absolute;width:8px;height:8px;background:var(--teal);border-radius:50%;box-shadow:0 0 16px rgba(76,29,107,.4)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.shield-svg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:140px;height:140px}
+.float-card{position:absolute;background:var(--navy-light);border:var(--card-border);border-radius:12px;padding:14px 18px;animation:float 6s ease-in-out infinite;z-index:3}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.float-card .fc-icon{width:30px;height:30px;border-radius:8px;background:var(--teal-glow);display:flex;align-items:center;justify-content:center;margin-bottom:6px}
+.float-card .fc-icon svg{width:14px;height:14px;color:var(--teal)}
+.float-card .fc-title{font-size:.75rem;font-weight:600}
+.float-card .fc-sub{font-size:.68rem;color:var(--gray)}
+
+/* Logos */
+.logos-section{padding:40px 0;border-top:1px solid rgba(26,26,31,.06);border-bottom:1px solid rgba(26,26,31,.06)}
+.logos-label{text-align:center;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);margin-bottom:28px}
+.logos-track{display:flex;gap:48px;align-items:center;justify-content:center;flex-wrap:wrap;opacity:.3}
+.logos-track span{font-family:var(--font-body);font-size:1rem;font-weight:700;letter-spacing:.04em;white-space:nowrap}
+
+/* Cards */
+.card{background:var(--navy-card);border:var(--card-border);border-radius:var(--radius);padding:32px 28px;transition:all .4s;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--teal);transform:scaleX(0);transition:transform .4s;transform-origin:left}
+.card:hover::before{transform:scaleX(1)}
+.card:hover{border-color:rgba(76,29,107,.12);transform:translateY(-3px);box-shadow:0 16px 48px rgba(26,26,31,.06)}
+.card-icon{width:48px;height:48px;border-radius:12px;background:var(--teal-glow);display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.card-icon svg{width:22px;height:22px;color:var(--teal)}
+.card h3{font-size:1.1rem;font-weight:600;margin-bottom:10px}
+.card p{font-size:.88rem;color:var(--gray);line-height:1.65}
+.card-link{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:.83rem;font-weight:600;color:var(--teal);cursor:pointer;transition:gap .3s}
+.card-link:hover{gap:10px}
+
+/* Detail Page Hero */
+.detail-hero{padding:clamp(100px,14vw,160px) 0 clamp(60px,8vw,100px);position:relative;overflow:hidden}
+.detail-hero::before{content:'';position:absolute;top:-40%;right:-20%;width:600px;height:600px;background:radial-gradient(circle,rgba(76,29,107,.06) 0%,transparent 70%);pointer-events:none}
+.detail-hero .eyebrow{margin-bottom:16px}
+.detail-hero h1{font-family:var(--font-display);font-size:clamp(2.2rem,4.5vw,3.4rem);line-height:1.1;font-weight:400;margin-bottom:20px;max-width:700px}
+.detail-hero h1 em{font-style:italic;color:var(--teal)}
+.detail-hero .lead{font-size:1.1rem;line-height:1.75;color:var(--gray);max-width:620px;margin-bottom:32px}
+
+/* Content Blocks */
+.content-block{max-width:800px}
+.content-block h2{font-family:var(--font-display);font-size:clamp(1.6rem,3vw,2.2rem);line-height:1.15;margin-bottom:16px;font-weight:400}
+.content-block h2 em{font-style:italic;color:var(--teal)}
+.content-block h3{font-size:1.1rem;font-weight:600;margin:28px 0 10px;color:var(--white)}
+.content-block p{color:var(--gray);font-size:.95rem;line-height:1.75;margin-bottom:16px}
+.content-block ul{list-style:none;margin:16px 0 24px}
+.content-block li{position:relative;padding-left:24px;color:var(--gray);font-size:.92rem;line-height:1.7;margin-bottom:10px}
+.content-block li::before{content:'';position:absolute;left:0;top:9px;width:8px;height:8px;border-radius:50%;background:var(--teal);opacity:.6}
+
+/* Process Steps */
+.process-steps{display:flex;flex-direction:column;gap:0;margin:32px 0}
+.process-step{display:flex;gap:24px;position:relative;padding-bottom:32px}
+.process-step:last-child{padding-bottom:0}
+.step-num{min-width:48px;height:48px;border-radius:50%;background:var(--teal-glow);border:2px solid rgba(76,29,107,.2);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;color:var(--teal);position:relative;z-index:2}
+.process-step:not(:last-child) .step-num::after{content:'';position:absolute;top:48px;left:50%;width:2px;height:calc(100%);background:rgba(76,29,107,.1);transform:translateX(-50%)}
+.step-content h4{font-size:1rem;font-weight:600;margin-bottom:6px;color:var(--white)}
+.step-content p{font-size:.88rem;color:var(--gray);line-height:1.65}
+
+/* Feature Grid */
+.feature-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin:32px 0}
+.feature-item{background:var(--navy-card);border:var(--card-border);border-radius:12px;padding:24px}
+.feature-item h4{font-size:.95rem;font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.feature-item h4 .fi-dot{width:8px;height:8px;border-radius:50%;background:var(--teal)}
+.feature-item p{font-size:.85rem;color:var(--gray);line-height:1.6}
+
+/* Sidebar */
+.page-with-sidebar{display:grid;grid-template-columns:1fr 340px;gap:64px;align-items:start}
+.sidebar{position:sticky;top:100px}
+.sidebar-card{background:var(--navy-card);border:var(--card-border);border-radius:var(--radius);padding:28px;margin-bottom:20px}
+.sidebar-card h4{font-size:.95rem;font-weight:600;margin-bottom:16px}
+.sidebar-card .stat-row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(26,26,31,.06)}
+.sidebar-card .stat-row:last-child{border:none}
+.sidebar-card .stat-label{font-size:.82rem;color:var(--gray)}
+.sidebar-card .stat-value{font-size:.85rem;font-weight:600;color:var(--teal)}
+.sidebar-card .sc-list a{display:block;padding:10px 0;font-size:.88rem;color:var(--gray-light);border-bottom:1px solid rgba(26,26,31,.06);transition:color .2s}
+.sidebar-card .sc-list a:hover{color:var(--teal)}
+
+/* CTA Box */
+.cta-inline{background:linear-gradient(135deg,var(--navy-mid),var(--navy-card));border:1px solid rgba(76,29,107,.1);border-radius:16px;padding:40px;text-align:center;margin:48px 0}
+.cta-inline h3{font-family:var(--font-display);font-size:1.6rem;margin-bottom:10px;font-weight:400}
+.cta-inline h3 em{font-style:italic;color:var(--teal)}
+.cta-inline p{color:var(--gray);font-size:.92rem;margin-bottom:24px}
+
+/* Tags */
+.tag{display:inline-block;padding:5px 14px;border-radius:20px;font-size:.75rem;font-weight:600;border:1px solid rgba(76,29,107,.15);color:var(--teal);background:var(--teal-glow);margin-right:6px;margin-bottom:6px}
+
+/* Tab Nav for sub-pages */
+.tab-nav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:40px;padding-bottom:20px;border-bottom:1px solid rgba(26,26,31,.07)}
+.tab-btn{padding:10px 20px;border-radius:8px;font-size:.85rem;font-weight:500;color:var(--gray);background:transparent;border:var(--card-border);cursor:pointer;transition:all .3s;font-family:var(--font-body)}
+.tab-btn:hover{color:var(--white);border-color:rgba(26,26,31,.12)}
+.tab-btn.active{background:var(--teal-glow);color:var(--teal);border-color:rgba(76,29,107,.2)}
+
+/* Industries grid on detail */
+.ind-detail-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-top:32px}
+.ind-detail-card{background:var(--navy-card);border:var(--card-border);border-radius:var(--radius);overflow:hidden;transition:all .4s;cursor:pointer}
+.ind-detail-card:hover{border-color:rgba(76,29,107,.15);transform:translateY(-3px);box-shadow:0 16px 48px rgba(26,26,31,.06)}
+.ind-detail-card .ind-banner{height:6px;background:linear-gradient(90deg,var(--teal),var(--blue))}
+.ind-detail-card .ind-body{padding:28px}
+.ind-detail-card h3{font-size:1.1rem;font-weight:600;margin-bottom:10px}
+.ind-detail-card p{font-size:.88rem;color:var(--gray);line-height:1.6;margin-bottom:16px}
+.ind-detail-card .ind-tags{margin-bottom:16px}
+
+/* Big CTA */
+.cta-section{position:relative;overflow:hidden}
+.cta-box{background:linear-gradient(135deg,var(--navy-mid),var(--navy-card));border:1px solid rgba(76,29,107,.1);border-radius:24px;padding:clamp(48px,6vw,72px);text-align:center;position:relative;overflow:hidden}
+.cta-box::before{content:'';position:absolute;top:-50%;left:50%;transform:translateX(-50%);width:800px;height:400px;background:radial-gradient(ellipse,rgba(76,29,107,.06) 0%,transparent 70%)}
+.cta-box h2{font-family:var(--font-display);font-size:clamp(1.8rem,3.5vw,2.8rem);margin-bottom:14px;position:relative}
+.cta-box h2 em{font-style:italic;color:var(--teal)}
+.cta-box p{color:var(--gray);font-size:1rem;max-width:500px;margin:0 auto 32px;position:relative}
+.cta-buttons{display:flex;gap:14px;justify-content:center;position:relative;flex-wrap:wrap}
+
+/* DW Banner */
+.dw-banner{background:linear-gradient(90deg,rgba(76,29,107,.05),rgba(59,130,246,.05));border:1px solid rgba(76,29,107,.08);border-radius:14px;padding:28px 36px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.dw-banner h3{font-size:1.05rem;font-weight:600}
+.dw-banner p{font-size:.88rem;color:var(--gray);margin-top:4px}
+
+/* Testimonial */
+.testimonial{background:var(--navy-card);border:var(--card-border);border-radius:16px;padding:40px;position:relative}
+.testimonial::before{content:'\201C';font-family:var(--font-display);font-size:5rem;color:var(--teal);opacity:.15;position:absolute;top:8px;left:28px;line-height:1}
+.testimonial blockquote{font-size:1.05rem;line-height:1.7;color:var(--gray-light);font-style:italic;position:relative;z-index:1;max-width:640px}
+.testimonial .t-author{display:flex;align-items:center;gap:14px;margin-top:24px;position:relative;z-index:1}
+.testimonial .t-avatar{width:44px;height:44px;border-radius:50%;background:var(--teal-glow);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--teal);font-size:.85rem}
+.testimonial .t-name{font-weight:600;font-size:.9rem}
+.testimonial .t-role{font-size:.78rem;color:var(--gray)}
+
+/* Footer */
+footer{border-top:1px solid rgba(26,26,31,.06);padding:56px 0 28px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-about p{color:var(--gray);font-size:.85rem;line-height:1.7;margin-top:14px;max-width:280px}
+.footer-col h5{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gray);margin-bottom:18px}
+.footer-col a{display:block;color:var(--gray-light);font-size:.88rem;margin-bottom:10px;transition:color .3s;cursor:pointer}
+.footer-col a:hover{color:var(--teal)}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:28px;border-top:1px solid rgba(26,26,31,.06);font-size:.78rem;color:var(--gray)}
+
+/* Animations */
+.fade-up{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+
+/* Responsive */
+@media(max-width:1024px){
+  .hero-grid{grid-template-columns:1fr}.hero-visual{display:none}
+  .page-with-sidebar{grid-template-columns:1fr}.sidebar{position:static}
+  .grid-3{grid-template-columns:1fr 1fr}.grid-4{grid-template-columns:1fr 1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .feature-grid{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  .nav-links{display:none}.hamburger{display:flex}
+  .grid-2,.grid-3{grid-template-columns:1fr}.grid-4{grid-template-columns:1fr 1fr}
+  .hero-stats{gap:24px;flex-wrap:wrap}.footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;gap:10px;text-align:center}
+  .tab-nav{gap:4px}.tab-btn{padding:8px 14px;font-size:.8rem}
+}
+
+/* ═══════════════════ Light-theme polish (Ivory + Deep Plum) ═══════════════════ */
+html{color-scheme:light}
+body{background:var(--ivory);color:var(--ink)}
+::selection{background:var(--plum);color:#fff}
+
+/* Explicit text contrast on plum-filled buttons */
+.btn-primary,.nav-cta{color:#fff!important}
+.btn-primary:hover,.nav-cta:hover{background:var(--plum-light);box-shadow:0 8px 24px rgba(76,29,107,.18)}
+.btn-outline{color:var(--ink)}
+.btn-outline:hover{border-color:var(--plum);color:var(--plum)}
+
+/* Nav on ivory */
+nav.scrolled{box-shadow:0 1px 0 rgba(26,26,31,.04)}
+.nav-link{color:var(--ink-mute)}
+.nav-link:hover,.nav-link.active{color:var(--plum)}
+.dropdown-menu{background:#fff;border-color:var(--line);box-shadow:0 20px 60px rgba(26,26,31,.08)}
+.dropdown-menu a{color:var(--ink-soft)}
+.dropdown-menu a:hover{background:rgba(76,29,107,.06);color:var(--plum)}
+
+/* Hero & detail hero */
+.hero{background:linear-gradient(180deg,var(--ivory) 0%,#fff 100%)}
+.hero::before{background:radial-gradient(circle,rgba(236,72,153,.08) 0%,transparent 70%)!important}
+.hero::after{content:"";position:absolute;bottom:-10%;left:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(76,29,107,.06) 0%,transparent 70%);pointer-events:none;z-index:0}
+.hero > *{position:relative;z-index:1}
+.detail-hero::before{background:radial-gradient(circle,rgba(236,72,153,.06) 0%,transparent 70%)!important}
+.hero-sub,.detail-hero .lead{color:var(--ink-soft)}
+.hero h1 em,.detail-hero h1 em,.section-title em,.content-block h2 em,.cta-box h2 em,.cta-inline h3 em{
+  background:var(--brand-gradient);-webkit-background-clip:text;background-clip:text;color:transparent
+}
+.hero-badge{color:var(--plum);border-color:rgba(76,29,107,.18);background:rgba(76,29,107,.05)}
+.hero-badge .dot{background:var(--plum)}
+.hero-stat{border-left-color:var(--plum)}
+.hero-stat .num{color:var(--ink)}
+
+/* Sections */
+.section-alt{background:var(--ivory-deep)}
+.logos-section{background:#fff;border-color:var(--line)}
+.logos-track{opacity:.55;color:var(--ink-mute)}
+.logos-label{color:var(--ink-faint)}
+.eyebrow{color:var(--plum)}
+
+/* Cards */
+.card{background:#fff;border:1px solid var(--line);box-shadow:0 1px 2px rgba(26,26,31,.03)}
+.card::before{background:var(--brand-gradient)}
+.card:hover{border-color:rgba(76,29,107,.2);box-shadow:0 16px 40px rgba(76,29,107,.08)}
+.card h3{color:var(--ink)}
+.card p{color:var(--ink-mute)}
+.card-icon{background:rgba(76,29,107,.08)}
+.card-icon svg{color:var(--plum)}
+.card-link{color:var(--plum)}
+
+/* Process / features / tabs */
+.step-num{background:rgba(76,29,107,.08);border-color:rgba(76,29,107,.2);color:var(--plum)}
+.process-step:not(:last-child) .step-num::after{background:rgba(76,29,107,.15)}
+.step-content h4{color:var(--ink)}
+.step-content p{color:var(--ink-mute)}
+.feature-item{background:#fff;border-color:var(--line)}
+.feature-item h4{color:var(--ink)}
+.feature-item h4 .fi-dot{background:var(--plum)}
+.feature-item p{color:var(--ink-mute)}
+.tab-btn{color:var(--ink-mute);background:#fff;border-color:var(--line)}
+.tab-btn:hover{color:var(--ink);border-color:rgba(26,26,31,.2)}
+.tab-btn.active{background:rgba(76,29,107,.08);color:var(--plum);border-color:rgba(76,29,107,.2)}
+
+/* Sidebar */
+.sidebar-card{background:#fff;border-color:var(--line);box-shadow:0 1px 2px rgba(26,26,31,.03)}
+.sidebar-card h4{color:var(--ink)}
+.sidebar-card .stat-row{border-color:var(--line-soft)}
+.sidebar-card .stat-label{color:var(--ink-mute)}
+.sidebar-card .stat-value{color:var(--plum)}
+.sidebar-card .sc-list a{color:var(--ink-soft);border-color:var(--line-soft)}
+.sidebar-card .sc-list a:hover{color:var(--plum)}
+
+/* CTAs */
+.cta-inline{background:linear-gradient(135deg,#fff,var(--ivory-deep));border:1px solid rgba(76,29,107,.14);box-shadow:0 8px 32px rgba(76,29,107,.05)}
+.cta-inline p{color:var(--ink-mute)}
+.cta-box{background:linear-gradient(135deg,var(--plum),var(--plum-dark));color:#fff;border:none;box-shadow:0 24px 60px rgba(76,29,107,.22)}
+.cta-box h2{color:#fff}
+.cta-box h2 em{background:linear-gradient(90deg,#F5C3DF,#EC4899);-webkit-background-clip:text;background-clip:text;color:transparent}
+.cta-box p{color:rgba(255,255,255,.75)}
+.cta-box .btn-outline{color:#fff;border-color:rgba(255,255,255,.35)}
+.cta-box .btn-outline:hover{border-color:#fff;color:#fff;background:rgba(255,255,255,.08)}
+.cta-box .btn-primary{background:#fff;color:var(--plum)!important}
+.cta-box .btn-primary:hover{background:#F5C3DF;color:var(--plum)!important;box-shadow:0 8px 24px rgba(0,0,0,.15)}
+.cta-box::before{background:radial-gradient(ellipse,rgba(236,72,153,.22) 0%,transparent 70%)!important}
+
+.dw-banner{background:linear-gradient(90deg,rgba(76,29,107,.06),rgba(236,72,153,.04));border:1px solid rgba(76,29,107,.12)}
+.dw-banner h3{color:var(--ink)}
+.dw-banner p{color:var(--ink-mute)}
+
+/* Tags */
+.tag{color:var(--plum);border-color:rgba(76,29,107,.18);background:rgba(76,29,107,.06)}
+
+/* Industry cards — use brand gradient as default banner */
+.ind-detail-card{background:#fff;border-color:var(--line)}
+.ind-detail-card:hover{border-color:rgba(76,29,107,.2);box-shadow:0 16px 40px rgba(76,29,107,.08)}
+.ind-detail-card .ind-banner{background:var(--brand-gradient)}
+.ind-detail-card h3{color:var(--ink)}
+.ind-detail-card p{color:var(--ink-mute)}
+
+/* Testimonial */
+.testimonial{background:#fff;border-color:var(--line)}
+.testimonial::before{color:var(--plum);opacity:.12}
+.testimonial blockquote{color:var(--ink-soft)}
+.testimonial .t-avatar{background:rgba(76,29,107,.1);color:var(--plum)}
+.testimonial .t-name{color:var(--ink)}
+.testimonial .t-role{color:var(--ink-mute)}
+
+/* Float cards in hero */
+.float-card{background:#fff;border:1px solid var(--line);box-shadow:0 12px 32px rgba(26,26,31,.08)}
+.float-card .fc-icon{background:rgba(76,29,107,.08)}
+.float-card .fc-icon svg{color:var(--plum)}
+.float-card .fc-title{color:var(--ink)}
+.float-card .fc-sub{color:var(--ink-mute)}
+
+/* Orbits — keep subtle on light bg */
+.orbit{border-color:rgba(76,29,107,.12)}
+.orbit-dot{background:var(--plum);box-shadow:0 0 16px rgba(76,29,107,.28)}
+
+/* Form inputs */
+input,select,textarea{color:var(--ink)!important;background:#fff!important;border-color:rgba(26,26,31,.14)!important}
+input::placeholder,textarea::placeholder{color:var(--ink-faint)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--plum)!important;box-shadow:0 0 0 3px rgba(76,29,107,.1)}
+label{color:var(--ink-soft)!important}
+
+/* Footer */
+footer{background:var(--ivory-deep);border-color:var(--line)}
+.footer-about p{color:var(--ink-mute)}
+.footer-col h5{color:var(--ink-faint)}
+.footer-col a{color:var(--ink-soft)}
+.footer-col a:hover{color:var(--plum)}
+.footer-bottom{color:var(--ink-faint);border-color:var(--line)}
+
+/* Section headings */
+.section-title,.hero h1,.detail-hero h1,.content-block h2,.content-block h3,.cta-inline h3{color:var(--ink)}
+.content-block p{color:var(--ink-mute)}
+.content-block li{color:var(--ink-mute)}
+.content-block li::before{background:var(--plum);opacity:.8}
+.section-sub{color:var(--ink-mute)}
+
+/* Card headers styled via "E8/ISO/PCI" pill in frameworks grid */
+.grid-4 .card div[style*="border-radius:50%"]{color:var(--plum)!important;background:rgba(76,29,107,.08)!important}
+
+/* Subtle scrollbar */
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:var(--ivory-deep)}
+::-webkit-scrollbar-thumb{background:rgba(76,29,107,.25);border-radius:6px}
+::-webkit-scrollbar-thumb:hover{background:rgba(76,29,107,.4)}
+
+/* ═══════════════════ Editorial elevation (v2) ═══════════════════ */
+
+/* Signature gradient divider */
+.gradient-line{height:1px;background:linear-gradient(90deg,transparent 0%,var(--plum) 30%,var(--magenta) 70%,transparent 100%);margin:0;border:none;width:100%}
+.gradient-line.narrow{max-width:120px;margin:0 auto}
+
+/* Editorial hero replaces template hero */
+.hero-editorial{min-height:92vh;display:flex;flex-direction:column;justify-content:center;padding:120px 0 0;position:relative;overflow:hidden;background:var(--ivory)}
+.hero-editorial::before{content:"";position:absolute;top:-20%;right:-15%;width:900px;height:900px;background:radial-gradient(circle,rgba(236,72,153,.07) 0%,transparent 55%);pointer-events:none;z-index:0}
+.hero-editorial::after{content:"";position:absolute;bottom:-30%;left:-20%;width:900px;height:900px;background:radial-gradient(circle,rgba(76,29,107,.06) 0%,transparent 55%);pointer-events:none;z-index:0}
+.hero-editorial > *{position:relative;z-index:1}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.74rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:40px}
+.hero-eyebrow::before{content:"";width:28px;height:1px;background:var(--plum)}
+.hero-display{font-family:var(--font-display);font-size:clamp(3.4rem,8.4vw,8.2rem);line-height:.97;letter-spacing:-.03em;font-weight:400;color:var(--ink);margin-bottom:36px;max-width:17ch}
+.hero-display em{font-style:italic;background:var(--brand-gradient);-webkit-background-clip:text;background-clip:text;color:transparent;padding-right:.08em}
+.hero-lede{font-size:clamp(1.1rem,1.45vw,1.35rem);line-height:1.55;color:var(--ink-soft);max-width:640px;margin-bottom:48px;font-weight:400}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:96px}
+.hero-ctas .btn{padding:16px 30px;font-size:.96rem}
+.hero-link{display:inline-flex;align-items:center;gap:8px;color:var(--ink);font-weight:600;font-size:.95rem;padding:16px 8px;cursor:pointer;position:relative}
+.hero-link::after{content:"";position:absolute;bottom:10px;left:8px;right:8px;height:1px;background:currentColor;opacity:.3;transition:opacity .2s}
+.hero-link:hover::after{opacity:1;background:var(--plum)}
+.hero-link:hover{color:var(--plum)}
+
+/* Proof strip — big-number editorial */
+.proof-strip{padding:64px 0;border-top:1px solid var(--line);background:var(--ivory)}
+.proof-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:48px;align-items:start}
+.proof-num{font-family:var(--font-display);font-size:clamp(2.6rem,4.2vw,3.6rem);line-height:1;font-weight:400;letter-spacing:-.02em;color:var(--ink);margin-bottom:10px}
+.proof-num sup{font-size:.55em;color:var(--plum);vertical-align:super;font-family:var(--font-body);font-weight:500}
+.proof-label{font-size:.86rem;line-height:1.45;color:var(--ink-mute);max-width:220px}
+
+/* Intelligence snapshot — authority module */
+.intel-module{padding:var(--section-pad) 0;background:var(--ink);color:#fff;position:relative;overflow:hidden}
+.intel-module::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 0%,var(--plum) 30%,var(--magenta) 70%,transparent 100%)}
+.intel-module::after{content:"";position:absolute;bottom:-50%;right:-20%;width:700px;height:700px;background:radial-gradient(circle,rgba(236,72,153,.14) 0%,transparent 60%);pointer-events:none}
+.intel-module > .container{position:relative;z-index:1}
+.intel-eyebrow{display:flex;align-items:center;gap:14px;font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;font-weight:600;color:rgba(255,255,255,.55);margin-bottom:32px}
+.intel-eyebrow .pulse{width:8px;height:8px;border-radius:50%;background:#10B981;box-shadow:0 0 0 0 rgba(16,185,129,.6);animation:intelPulse 2.4s infinite}
+@keyframes intelPulse{0%{box-shadow:0 0 0 0 rgba(16,185,129,.6)}70%{box-shadow:0 0 0 12px rgba(16,185,129,0)}100%{box-shadow:0 0 0 0 rgba(16,185,129,0)}}
+.intel-title{font-family:var(--font-display);font-size:clamp(2rem,3.5vw,3rem);line-height:1.1;color:#fff;margin-bottom:16px;max-width:22ch;font-weight:400}
+.intel-title em{font-style:italic;background:linear-gradient(90deg,#F5C3DF,#EC4899);-webkit-background-clip:text;background-clip:text;color:transparent}
+.intel-sub{color:rgba(255,255,255,.7);font-size:1.02rem;line-height:1.6;max-width:600px;margin-bottom:56px}
+.intel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden}
+.intel-panel{background:var(--ink);padding:36px 32px}
+.intel-panel-title{font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600;color:var(--magenta);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.intel-panel-title::before{content:"";width:18px;height:1px;background:var(--magenta)}
+.intel-list{list-style:none;padding:0;margin:0}
+.intel-list li{padding:14px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:.92rem;line-height:1.45;color:rgba(255,255,255,.82);display:flex;flex-direction:column;gap:4px}
+.intel-list li:last-child{border-bottom:none}
+.intel-list li .intel-tag{font-family:ui-monospace,'SF Mono','Monaco',monospace;font-size:.76rem;color:var(--magenta);letter-spacing:.04em}
+.intel-list li .intel-sub-text{font-size:.8rem;color:rgba(255,255,255,.5)}
+.intel-footer{margin-top:40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;padding-top:32px;border-top:1px solid rgba(255,255,255,.08)}
+.intel-footer-note{font-size:.82rem;color:rgba(255,255,255,.55)}
+.intel-footer a{color:#fff;font-weight:600;font-size:.92rem;border-bottom:1px solid rgba(255,255,255,.3);padding-bottom:2px;transition:border-color .2s}
+.intel-footer a:hover{border-color:var(--magenta)}
+
+/* Section-level editorial lifts */
+.section-header.editorial{display:grid;grid-template-columns:1fr 1.4fr;gap:64px;align-items:end;margin-bottom:72px}
+.section-header.editorial .section-title{font-size:clamp(2.4rem,4.8vw,4rem);line-height:1.02;letter-spacing:-.025em;max-width:18ch}
+.section-header.editorial .section-sub{font-size:1.08rem;line-height:1.65;max-width:none;margin-top:0;padding-bottom:8px}
+.section-number{font-family:var(--font-display);font-size:1rem;color:var(--plum);font-style:italic;letter-spacing:.04em;margin-bottom:18px;display:block}
+
+/* Elevated services manifesto row */
+.services-anchor{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center;padding:56px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:40px}
+.services-anchor-eyebrow{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--plum);font-weight:700;margin-bottom:18px}
+.services-anchor h3{font-family:var(--font-display);font-size:clamp(1.8rem,3vw,2.6rem);line-height:1.12;letter-spacing:-.01em;color:var(--ink);margin-bottom:18px;font-weight:400}
+.services-anchor h3 em{font-style:italic;background:var(--brand-gradient);-webkit-background-clip:text;background-clip:text;color:transparent}
+.services-anchor p{font-size:1.02rem;line-height:1.65;color:var(--ink-soft);margin-bottom:24px}
+.services-anchor-points{display:flex;flex-direction:column;gap:18px;margin-bottom:28px}
+.services-anchor-point{display:flex;gap:14px;align-items:flex-start}
+.services-anchor-point .ap-icon{flex-shrink:0;width:28px;height:28px;border-radius:8px;background:rgba(76,29,107,.08);display:flex;align-items:center;justify-content:center;color:var(--plum);font-size:.78rem;font-weight:700}
+.services-anchor-point .ap-body h5{font-size:.95rem;font-weight:600;color:var(--ink);margin-bottom:3px}
+.services-anchor-point .ap-body p{font-size:.88rem;line-height:1.55;color:var(--ink-mute);margin:0}
+.services-anchor-quote{background:#fff;border:1px solid var(--line);border-radius:16px;padding:40px;position:relative;box-shadow:0 12px 36px rgba(76,29,107,.06)}
+.services-anchor-quote blockquote{font-family:var(--font-display);font-size:1.35rem;line-height:1.35;color:var(--ink);font-style:italic;margin-bottom:20px;position:relative}
+.services-anchor-quote blockquote::before{content:"\201C";position:absolute;top:-20px;left:-8px;font-size:3rem;color:var(--plum);opacity:.25;line-height:1}
+.services-anchor-quote .sa-author{display:flex;align-items:center;gap:14px;padding-top:20px;border-top:1px solid var(--line)}
+.services-anchor-quote .sa-avatar{width:38px;height:38px;border-radius:50%;background:var(--brand-gradient);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.82rem}
+.services-anchor-quote .sa-name{font-weight:600;font-size:.9rem;color:var(--ink)}
+.services-anchor-quote .sa-role{font-size:.78rem;color:var(--ink-mute);margin-top:2px}
+
+/* Upgraded hero h1 for everything else to match */
+.detail-hero h1{font-size:clamp(2.4rem,5.2vw,4.2rem);line-height:1.04;letter-spacing:-.02em}
+
+/* Client logo/wordmark band */
+.client-band{padding:64px 0 72px;background:var(--ivory);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.client-band-label{font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-faint);font-weight:600;margin-bottom:32px;text-align:center}
+.client-row{display:grid;grid-template-columns:repeat(6,1fr);gap:24px;align-items:center;max-width:1180px;margin:0 auto}
+.client-logo{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 4px;position:relative;min-height:72px}
+.client-wordmark{font-family:var(--font-body);font-weight:700;font-size:1.3rem;letter-spacing:.01em;color:var(--ink);line-height:1.05}
+.client-wordmark em{font-style:normal;font-weight:400;color:var(--ink-mute);letter-spacing:-.01em}
+.client-caption{font-size:.74rem;color:var(--ink-faint);letter-spacing:.12em;text-transform:uppercase;margin-top:10px;font-weight:500}
+.client-logo-img{max-height:46px;max-width:140px;width:auto;height:auto;object-fit:contain;opacity:.92;transition:opacity .2s}
+.client-logo-img:hover{opacity:1}
+/* Hide fallback text if an image successfully loads */
+.client-logo:has(img.client-logo-img:not(.broken)) .client-wordmark-fallback{display:none}
+/* Hide broken images; the wordmark fallback remains visible */
+.client-logo-img.broken{display:none}
+.client-band-foot{margin-top:36px;text-align:center;font-size:.82rem;color:var(--ink-mute)}
+.client-band-foot a{color:var(--plum);font-weight:600;border-bottom:1px solid rgba(76,29,107,.25);padding-bottom:2px;cursor:pointer}
+.client-band-foot a:hover{border-color:var(--plum)}
+
+/* Featured case study callout */
+.case-feature{padding:var(--section-pad) 0;background:var(--ivory-deep);position:relative;overflow:hidden}
+.case-feature::before{content:"";position:absolute;top:-30%;right:-10%;width:600px;height:600px;background:radial-gradient(circle,rgba(236,72,153,.06) 0%,transparent 60%);pointer-events:none}
+.case-feature-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:72px;align-items:center;position:relative;z-index:1}
+.case-feature-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;font-weight:600;color:var(--plum);margin-bottom:20px}
+.case-feature-eyebrow::before{content:"";width:24px;height:1px;background:var(--plum)}
+.case-feature h3{font-family:var(--font-display);font-size:clamp(2.2rem,4vw,3.4rem);line-height:1.05;letter-spacing:-.02em;color:var(--ink);margin-bottom:20px;font-weight:400;max-width:16ch}
+.case-feature h3 em{font-style:italic;background:var(--brand-gradient);-webkit-background-clip:text;background-clip:text;color:transparent}
+.case-feature p{font-size:1.05rem;line-height:1.6;color:var(--ink-soft);margin-bottom:28px;max-width:480px}
+.case-feature .case-meta{display:flex;gap:36px;margin-bottom:28px;padding:24px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.case-meta-item .cm-label{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;margin-bottom:6px}
+.case-meta-item .cm-value{font-size:.92rem;color:var(--ink);font-weight:600}
+
+.case-feature-number{background:#fff;border-radius:20px;padding:56px 48px;border:1px solid var(--line);box-shadow:0 24px 60px rgba(76,29,107,.08);position:relative;overflow:hidden}
+.case-feature-number::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:var(--brand-gradient)}
+.case-feature-number .cfn-stat{font-family:var(--font-display);font-size:clamp(3rem,5.5vw,4.8rem);line-height:1;letter-spacing:-.02em;color:var(--ink);margin-bottom:14px;font-weight:400;padding-right:.1em}
+.case-feature-number .cfn-stat em{font-style:italic;background:var(--brand-gradient);-webkit-background-clip:text;background-clip:text;color:transparent}
+.case-feature-number .cfn-caption{font-size:.95rem;line-height:1.45;color:var(--ink-soft);margin-bottom:24px}
+.case-feature-number .cfn-row{display:flex;justify-content:space-between;padding-top:20px;border-top:1px solid var(--line);font-size:.82rem}
+.case-feature-number .cfn-row span:first-child{color:var(--ink-mute)}
+.case-feature-number .cfn-row span:last-child{color:var(--ink);font-weight:600}
+
+/* Named testimonial block (upgrade) */
+.testimonial.named{padding:48px;background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 20px 50px rgba(76,29,107,.06);position:relative}
+.testimonial.named::before{content:"\201C";position:absolute;top:16px;left:32px;font-family:var(--font-display);font-size:5.5rem;color:var(--plum);opacity:.15;line-height:1}
+.testimonial.named blockquote{font-family:var(--font-display);font-size:1.45rem;line-height:1.4;color:var(--ink);font-style:italic;margin-bottom:32px;position:relative;z-index:1;font-weight:400}
+.testimonial.named .t-author{display:flex;align-items:center;gap:16px;padding-top:24px;border-top:1px solid var(--line)}
+.testimonial.named .t-avatar{width:52px;height:52px;border-radius:50%;background:var(--brand-gradient);color:#fff;font-weight:700;font-size:1.02rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.testimonial.named .t-name{font-weight:600;font-size:1rem;color:var(--ink)}
+.testimonial.named .t-role{font-size:.85rem;color:var(--ink-mute);margin-top:3px}
+.testimonial.named .t-logo{margin-left:auto;font-size:.88rem;color:var(--ink-mute);font-weight:600;letter-spacing:.02em}
+
+/* Placeholder marker — makes it obvious in preview, can be deleted on go-live */
+.placeholder{background:rgba(236,72,153,.06);border:1px dashed rgba(236,72,153,.35);padding:2px 8px;border-radius:4px;color:var(--plum);font-style:normal;font-weight:500;font-size:.9em}
+
+/* Leadership section */
+.leadership{padding:var(--section-pad) 0;background:var(--ivory);position:relative}
+.leadership-header{max-width:720px;margin-bottom:72px}
+.leadership-header .eyebrow{color:var(--plum)}
+.leadership-header h2{font-family:var(--font-display);font-size:clamp(2.2rem,4vw,3.4rem);line-height:1.05;letter-spacing:-.02em;color:var(--ink);font-weight:400;margin-bottom:16px}
+.leadership-header h2 em{font-style:italic;background:var(--brand-gradient);-webkit-background-clip:text;background-clip:text;color:transparent}
+.leadership-header p{font-size:1.05rem;line-height:1.6;color:var(--ink-soft)}
+
+.leadership-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
+.leader-card{display:flex;flex-direction:column}
+.leader-photo{aspect-ratio:4/5;width:100%;border-radius:18px;overflow:hidden;margin-bottom:24px;background:var(--ivory-deep);position:relative;box-shadow:0 12px 32px rgba(26,26,31,.06)}
+.leader-photo img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;filter:saturate(.92) contrast(1.02);transition:filter .35s,transform .5s}
+.leader-card:hover .leader-photo img{filter:saturate(1) contrast(1);transform:scale(1.02)}
+/* Gradient accent that matches the brand on each portrait */
+.leader-photo::after{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--brand-gradient);opacity:0;transition:opacity .3s;z-index:1}
+.leader-card:hover .leader-photo::after{opacity:1}
+/* Placeholder background when photo is missing */
+.leader-photo.photo-missing{display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--ivory-deep),#fff)}
+.leader-photo.photo-missing .photo-fallback{font-family:var(--font-display);font-size:clamp(3rem,6vw,5rem);color:var(--plum);opacity:.35;font-style:italic}
+
+.leader-name{font-family:var(--font-display);font-size:1.4rem;font-weight:400;letter-spacing:-.01em;color:var(--ink);margin-bottom:4px;line-height:1.1}
+.leader-role{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--plum);font-weight:600;margin-bottom:14px;line-height:1.3}
+.leader-bio{font-size:.88rem;line-height:1.55;color:var(--ink-soft);margin-bottom:14px}
+.leader-links{display:flex;gap:12px;font-size:.82rem;color:var(--ink-mute);align-items:center}
+.leader-links a{color:var(--ink-mute);display:inline-flex;align-items:center;gap:6px;transition:color .2s;cursor:pointer}
+.leader-links a:hover{color:var(--plum)}
+.leader-links a svg{width:14px;height:14px}
+
+/* Wider team grid */
+.wider-team{padding:48px 0 var(--section-pad);background:var(--ivory)}
+.wider-team-label{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-faint);font-weight:600;margin-bottom:32px}
+.wider-team-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:20px}
+.wider-member{display:flex;flex-direction:column}
+.wider-photo{aspect-ratio:1/1;width:100%;border-radius:14px;overflow:hidden;margin-bottom:14px;background:var(--ivory-deep);box-shadow:0 8px 22px rgba(26,26,31,.05);position:relative}
+.wider-photo img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;filter:saturate(.92) contrast(1.02);transition:filter .3s,transform .4s}
+.wider-member:hover .wider-photo img{filter:saturate(1);transform:scale(1.03)}
+.wider-photo.photo-missing{display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--ivory-deep),#fff)}
+.wider-photo.photo-missing .photo-fallback{font-family:var(--font-display);font-size:2rem;color:var(--plum);opacity:.4;font-style:italic}
+.wider-name{font-size:.95rem;font-weight:600;color:var(--ink);line-height:1.2;margin-bottom:2px}
+.wider-role{font-size:.78rem;color:var(--ink-mute);line-height:1.35}
+
+/* Team group photo — culture moment */
+.team-culture{padding:0 0 var(--section-pad);background:var(--ivory)}
+.team-culture-frame{position:relative;aspect-ratio:2/3;width:100%;max-width:540px;margin:0 auto;border-radius:20px;overflow:hidden;background:var(--ivory-deep);box-shadow:0 24px 60px rgba(26,26,31,.1)}
+.team-culture-frame img{width:100%;height:100%;object-fit:cover;object-position:center center;display:block;filter:saturate(.95) contrast(1.03)}
+.team-culture-frame.photo-missing{display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--ivory-deep),#fff);border:1px dashed rgba(26,26,31,.15)}
+.team-culture-frame.photo-missing::after{content:"Team photo";font-family:var(--font-display);color:var(--plum);opacity:.4;font-size:1.8rem;font-style:italic}
+.team-culture-caption{display:flex;justify-content:space-between;align-items:baseline;margin-top:20px;flex-wrap:wrap;gap:12px;max-width:540px;margin-left:auto;margin-right:auto}
+.team-culture-caption .cap-title{font-family:var(--font-display);font-size:1.3rem;font-style:italic;color:var(--ink);font-weight:400}
+.team-culture-caption .cap-meta{font-size:.82rem;color:var(--ink-mute);letter-spacing:.06em}
+
+/* Case study page specific */
+.case-page-hero{padding:clamp(120px,16vw,180px) 0 clamp(40px,6vw,72px);background:var(--ivory);position:relative}
+.case-page-hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at top right,rgba(236,72,153,.06) 0%,transparent 60%);pointer-events:none}
+.case-page-hero .container{position:relative;z-index:1}
+.case-tags{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.case-tags .tag{margin:0}
+.case-stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;padding:48px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:40px 0}
+.case-stat-item .cs-num{font-family:var(--font-display);font-size:clamp(2.2rem,3.4vw,3rem);line-height:1;color:var(--ink);font-weight:400;margin-bottom:8px;letter-spacing:-.02em}
+.case-stat-item .cs-num em{font-style:italic;background:var(--brand-gradient);-webkit-background-clip:text;background-clip:text;color:transparent}
+.case-stat-item .cs-label{font-size:.85rem;line-height:1.45;color:var(--ink-mute)}
+
+/* Responsive */
+@media(max-width:1024px){
+  .proof-grid{grid-template-columns:repeat(2,1fr);gap:36px}
+  .intel-grid{grid-template-columns:1fr}
+  .section-header.editorial{grid-template-columns:1fr;gap:24px}
+  .services-anchor{grid-template-columns:1fr;gap:36px;padding:40px 0}
+  .case-feature-grid{grid-template-columns:1fr;gap:40px}
+  .client-row{grid-template-columns:repeat(3,1fr);gap:24px}
+  .case-stat-row{grid-template-columns:repeat(2,1fr);gap:28px}
+  .leadership-grid{grid-template-columns:repeat(2,1fr);gap:36px}
+  .wider-team-grid{grid-template-columns:repeat(3,1fr);gap:24px}
+  .team-culture-frame{aspect-ratio:2/3;max-width:480px}
+}
+@media(max-width:640px){
+  .hero-editorial{min-height:auto;padding:100px 0 64px}
+  .proof-grid{grid-template-columns:1fr 1fr;gap:28px}
+  .proof-num{font-size:2.2rem}
+  .intel-panel{padding:28px 24px}
+  .hero-ctas{gap:8px;margin-bottom:56px}
+  .client-row{grid-template-columns:1fr;gap:20px}
+  .case-feature .case-meta{flex-direction:column;gap:20px}
+  .case-feature-number{padding:40px 28px}
+  .testimonial.named{padding:32px}
+  .testimonial.named blockquote{font-size:1.2rem}
+  .leadership-grid{grid-template-columns:1fr;gap:40px;max-width:420px;margin:0 auto}
+  .wider-team-grid{grid-template-columns:repeat(2,1fr);gap:16px}
+  .team-culture-frame{aspect-ratio:2/3;max-width:360px}
+}
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════ NAV ═══════════════════════ -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <div class="logo" onclick="showPage('home')" aria-label="CypherLeap home">
+      <img src="logos/cypherleap-logo.png" alt="CypherLeap" class="logo-img" />
+    </div>
+    <div class="nav-links">
+      <div class="nav-dropdown">
+        <div class="nav-link has-sub">Solutions</div>
+        <div class="dropdown-menu">
+          <a onclick="showPage('vciso')">Virtual CISO</a>
+          <a onclick="showPage('mgrc')">Managed GRC</a>
+          <a onclick="showPage('siem')">Managed SIEM</a>
+          <a onclick="showPage('cti')">CTI &amp; EASM</a>
+          <a onclick="showPage('pentest')">Penetration Testing</a>
+          <a onclick="showPage('itsupport')">Managed IT &amp; Cyber Support</a>
+        </div>
+      </div>
+      <div class="nav-dropdown">
+        <div class="nav-link has-sub">Frameworks</div>
+        <div class="dropdown-menu">
+          <a onclick="showPage('irap')">IRAP</a>
+          <a onclick="showPage('essential8')">Essential Eight</a>
+          <a onclick="showPage('cps234')">APRA CPS 234</a>
+          <a onclick="showPage('iso27001')">ISO/IEC 27001:2022</a>
+          <a onclick="showPage('pcidss')">PCI DSS 4.0</a>
+          <a onclick="showPage('nist')">NIST CSF</a>
+          <a onclick="showPage('soc2')">SOC 2</a>
+        </div>
+      </div>
+      <div class="nav-dropdown">
+        <div class="nav-link has-sub">Industries</div>
+        <div class="dropdown-menu">
+          <a onclick="showPage('ind-healthcare')">Regulated Healthcare</a>
+          <a onclick="showPage('ind-finance')">Financial Services</a>
+          <a onclick="showPage('ind-profserv')">Government &amp; Critical Infra</a>
+          <a onclick="showPage('ind-saas')">Professional &amp; Industrial</a>
+          <a onclick="showPage('ind-legal')">Legal</a>
+        </div>
+      </div>
+      <div class="nav-link" onclick="showPage('case-studies')">Case Studies</div>
+      <div class="nav-link" onclick="showPage('about')">About</div>
+      <div class="nav-link" onclick="showPage('resources')">Resources</div>
+      <div class="nav-cta" onclick="showPage('contact')">Book a Consultation →</div>
+    </div>
+    <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════ HOME ═══════════════════════ -->
+<div class="page active" id="page-home">
+
+<!-- Hero — Editorial -->
+<section class="hero-editorial">
+<div class="container">
+  <div class="fade-up">
+    <div class="hero-eyebrow">Managed Cybersecurity · Australia &amp; APAC</div>
+    <h1 class="hero-display">Security that <em>lets you leap</em> forward.</h1>
+    <p class="hero-lede">We run cybersecurity, compliance, and risk operations for organisations operating under regulatory scrutiny. So your business moves faster than your threat model, your audit calendar, or the regulator chasing them both.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" onclick="showPage('contact')">Start a conversation <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <a class="hero-link" onclick="showPage('home-services')">See what we do →</a>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- Client Logo Band — real named references -->
+<section class="client-band">
+<div class="container">
+  <div class="client-band-label">Trusted by security and compliance teams at</div>
+  <div class="client-row">
+    <div class="client-logo">
+      <img src="logos/vic-gov.svg" alt="Victoria State Government" class="client-logo-img" onerror="if(this.dataset.retry){this.classList.add('broken')}else{this.dataset.retry=1;this.src='logos/vic-gov.png'}" />
+      <div class="client-wordmark client-wordmark-fallback">Victoria <em>State Government</em></div>
+      <div class="client-caption">State Government</div>
+    </div>
+    <div class="client-logo">
+      <img src="logos/imed.svg" alt="I-MED Radiology Network" class="client-logo-img" onerror="if(this.dataset.retry){this.classList.add('broken')}else{this.dataset.retry=1;this.src='logos/imed.png'}" />
+      <div class="client-wordmark client-wordmark-fallback">I-MED <em>Radiology</em></div>
+      <div class="client-caption">Diagnostic Imaging</div>
+    </div>
+    <div class="client-logo">
+      <img src="logos/sgfleet.svg" alt="SG Fleet" class="client-logo-img" onerror="if(this.dataset.retry){this.classList.add('broken')}else{this.dataset.retry=1;this.src='logos/sgfleet.png'}" />
+      <div class="client-wordmark client-wordmark-fallback">SG<em>Fleet</em></div>
+      <div class="client-caption">Fleet &amp; Mobility</div>
+    </div>
+    <div class="client-logo">
+      <img src="logos/mirus.svg" alt="Mirus Australia" class="client-logo-img" onerror="if(this.dataset.retry){this.classList.add('broken')}else{this.dataset.retry=1;this.src='logos/mirus.png'}" />
+      <div class="client-wordmark client-wordmark-fallback">Mirus <em>Australia</em></div>
+      <div class="client-caption">Aged Care &amp; Advisory</div>
+    </div>
+    <div class="client-logo">
+      <img src="logos/lmctplus.svg" alt="LMCT+" class="client-logo-img" onerror="if(this.dataset.retry){this.classList.add('broken')}else{this.dataset.retry=1;this.src='logos/lmctplus.png'}" />
+      <div class="client-wordmark client-wordmark-fallback">LMCT<em>+</em></div>
+      <div class="client-caption">Motor Trade</div>
+    </div>
+    <div class="client-logo">
+      <img src="logos/checkmate.svg" alt="Checkmate" class="client-logo-img" onerror="if(this.dataset.retry){this.classList.add('broken')}else{this.dataset.retry=1;this.src='logos/checkmate.png'}" />
+      <div class="client-wordmark client-wordmark-fallback">Check<em>mate</em></div>
+      <div class="client-caption">Background Screening</div>
+    </div>
+  </div>
+  <div class="client-band-foot">Engaged across IRAP assessments, managed GRC, offensive security, and cyber tooling procurement. <a onclick="showPage('case-studies')">See how we work with them →</a></div>
+</div>
+</section>
+
+<!-- Intelligence Snapshot — Authority Module -->
+<section class="intel-module">
+<div class="container">
+  <div class="intel-eyebrow"><span class="pulse"></span> Threat Landscape · Q2 2026</div>
+  <h2 class="intel-title">What our team is <em>tracking</em> right now.</h2>
+  <p class="intel-sub">What our analysts are watching across regulated Australian and APAC environments. Refreshed quarterly with the campaigns, TTPs, and high-priority CVEs that matter most to our clients.</p>
+
+  <div class="intel-grid">
+    <div class="intel-panel">
+      <div class="intel-panel-title">Active Campaigns</div>
+      <ul class="intel-list">
+        <li><span>Scattered Spider — identity-based ransomware targeting managed service providers</span><span class="intel-sub-text">Observed in retail, insurance, SaaS</span></li>
+        <li><span>APT29 / Midnight Blizzard — OAuth token theft against M365 tenants</span><span class="intel-sub-text">Active in APAC government and CNI</span></li>
+        <li><span>FIN7 — point-of-sale and e-commerce credential harvesting</span><span class="intel-sub-text">Escalated activity in AU retail and hospitality</span></li>
+      </ul>
+    </div>
+    <div class="intel-panel">
+      <div class="intel-panel-title">Top TTPs This Quarter</div>
+      <ul class="intel-list">
+        <li><span>MFA fatigue &amp; push-bombing at session establishment</span><span class="intel-sub-text">+34% quarter-over-quarter</span></li>
+        <li><span>Help-desk social engineering for password resets</span><span class="intel-sub-text">Primary vector for Scattered Spider</span></li>
+        <li><span>Living-off-the-land binaries in cloud workloads</span><span class="intel-sub-text">Azure Automation, AWS SSM abuse</span></li>
+      </ul>
+    </div>
+    <div class="intel-panel">
+      <div class="intel-panel-title">Critical Vulnerabilities</div>
+      <ul class="intel-list">
+        <li><span class="intel-tag">CVE-2026-3401</span><span>Ivanti Connect Secure — unauthenticated RCE, exploit observed in the wild</span></li>
+        <li><span class="intel-tag">CVE-2026-2198</span><span>Citrix NetScaler — session hijacking via memory disclosure</span></li>
+        <li><span class="intel-tag">CVE-2026-0987</span><span>VMware vCenter — authentication bypass, patch within 14 days</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="intel-footer">
+    <div class="intel-footer-note">Curated quarterly by CypherLeap threat analysts from external telemetry and vendor intelligence partners.</div>
+    <a onclick="showPage('resources')">Subscribe to the quarterly intel brief →</a>
+  </div>
+</div>
+</section>
+
+<!-- Services Overview -->
+<section class="section" id="home-services">
+<div class="container">
+<div class="section-header editorial fade-up">
+  <div>
+    <span class="section-number">01 — What we do</span>
+    <h2 class="section-title">An operational security program, <em>delivered as a service</em>.</h2>
+  </div>
+  <p class="section-sub">Most security firms sell point products and call it a program. We run the program for you — strategy, detection, response, compliance, and the boring parts in between. Six disciplines, one accountable team, one monthly number on your invoice.</p>
+</div>
+
+<!-- Services Anchor Feature -->
+<div class="services-anchor fade-up">
+  <div>
+    <div class="services-anchor-eyebrow">Featured discipline · Virtual CISO</div>
+    <h3>Executive security leadership, <em>without the $400K salary</em>.</h3>
+    <p>A Virtual CISO runs your security program end-to-end — strategy, board reporting, risk appetite, incident command, vendor oversight, and the dozen quiet decisions per week that keep a company out of a breach headline.</p>
+    <div class="services-anchor-points">
+      <div class="services-anchor-point">
+        <div class="ap-icon">01</div>
+        <div class="ap-body"><h5>Board-grade reporting</h5><p>Quarterly risk posture with real numbers — not RAG charts — your board will actually read.</p></div>
+      </div>
+      <div class="services-anchor-point">
+        <div class="ap-icon">02</div>
+        <div class="ap-body"><h5>Full framework ownership</h5><p>ISO 27001, SOC 2, NIST CSF, Essential 8, APRA CPS 234, PCI DSS — mapped, managed, audit-ready.</p></div>
+      </div>
+      <div class="services-anchor-point">
+        <div class="ap-icon">03</div>
+        <div class="ap-body"><h5>Incident command in hours, not weeks</h5><p>Named executive on your side the moment something goes wrong. No hourly billing games.</p></div>
+      </div>
+    </div>
+    <a class="btn btn-primary btn-sm" onclick="showPage('vciso')">Explore Virtual CISO <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+  </div>
+  <div class="services-anchor-quote fade-up" style="display:flex;flex-direction:column;justify-content:center">
+    <div style="font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--plum);font-weight:700;margin-bottom:26px">What the first 90 days look like</div>
+    <div style="display:flex;flex-direction:column;gap:22px">
+      <div style="display:grid;grid-template-columns:96px 1fr;gap:20px;align-items:baseline">
+        <div style="font-family:var(--font-display);font-size:1.35rem;color:var(--ink);font-style:italic;font-weight:400">Week 1</div>
+        <div style="font-size:.95rem;line-height:1.55;color:var(--ink-soft)">Discovery and access. Existing controls inventoried, risk register baselined.</div>
+      </div>
+      <div style="display:grid;grid-template-columns:96px 1fr;gap:20px;align-items:baseline;padding-top:20px;border-top:1px solid var(--line)">
+        <div style="font-family:var(--font-display);font-size:1.35rem;color:var(--ink);font-style:italic;font-weight:400">Week 4</div>
+        <div style="font-size:.95rem;line-height:1.55;color:var(--ink-soft)">First board-grade risk pack delivered. Quarterly reporting cadence established.</div>
+      </div>
+      <div style="display:grid;grid-template-columns:96px 1fr;gap:20px;align-items:baseline;padding-top:20px;border-top:1px solid var(--line)">
+        <div style="font-family:var(--font-display);font-size:1.35rem;color:var(--ink);font-style:italic;font-weight:400">Month 3</div>
+        <div style="font-size:.95rem;line-height:1.55;color:var(--ink-soft)">Roadmap signed off, control owners assigned, maturity metrics baselined.</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="margin-bottom:32px;color:var(--ink-mute);font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;font-weight:600">The other five disciplines</div>
+<div class="grid-3">
+  <div class="card fade-up" onclick="showPage('mgrc')">
+    <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg></div>
+    <h3>Managed GRC</h3>
+    <p>Governance, risk, and compliance on autopilot. We build your ISMS, manage policies, and prepare you for every audit.</p>
+    <div class="card-link">Learn more →</div>
+  </div>
+  <div class="card fade-up" onclick="showPage('siem')">
+    <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+    <h3>Managed SIEM</h3>
+    <p>24/7 security monitoring, real-time threat detection, alert triage, and incident response. SIEM-agnostic, delivered through industry-leading platforms by senior analysts.</p>
+    <div class="card-link">Learn more →</div>
+  </div>
+  <div class="card fade-up" onclick="showPage('cti')">
+    <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+    <h3>CTI &amp; EASM</h3>
+    <p>Dark web monitoring, leaked credential detection, and external attack surface management to stop threats before they reach you.</p>
+    <div class="card-link">Learn more →</div>
+  </div>
+  <div class="card fade-up" onclick="showPage('pentest')">
+    <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+    <h3>Penetration Testing</h3>
+    <p>Network, application, cloud, and API penetration testing by certified ethical hackers with actionable remediation guidance.</p>
+    <div class="card-link">Learn more →</div>
+  </div>
+  <div class="card fade-up" onclick="showPage('itsupport')">
+    <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><circle cx="6" cy="6" r="1"/><circle cx="6" cy="18" r="1"/></svg></div>
+    <h3>Managed IT &amp; Cyber Support</h3>
+    <p>Unified IT and cyber operations. Endpoint management, identity &amp; access control, cloud infrastructure, and helpdesk.</p>
+    <div class="card-link">Learn more →</div>
+  </div>
+</div>
+<div style="margin-top:48px" class="fade-up">
+  <div class="dw-banner">
+    <div><h3>Free Dark Web Exposure Assessment</h3><p>Find out if your company's credentials have been compromised. No obligation, instant results.</p></div>
+    <a class="btn btn-primary btn-sm" href="https://socradar.io/free-tools/dark-web-report/partners/cypherleap" target="_blank" rel="noopener">Check My Exposure →</a>
+  </div>
+</div>
+</div>
+</section>
+
+<!-- Featured Case Study -->
+<section class="case-feature">
+<div class="container">
+<div class="case-feature-grid fade-up">
+  <div>
+    <div class="case-feature-eyebrow">Featured case study · Critical Healthcare Infrastructure</div>
+    <h3>Two phone calls. Four systems compromised. <em>Six days</em>.</h3>
+    <p>Under an unannounced engagement with a critical healthcare infrastructure operator, our offensive team ran a Scattered-Spider-style vishing simulation against the IT Service Desk and a frontline customer-facing function. Inside one working day, two pretexts landed access to the patient imaging portal, Microsoft 365, and the remote desktop environment, with MFA registered to our device.</p>
+    <div class="case-meta">
+      <div class="case-meta-item">
+        <div class="cm-label">Sector</div>
+        <div class="cm-value">Healthcare</div>
+      </div>
+      <div class="case-meta-item">
+        <div class="cm-label">Scope</div>
+        <div class="cm-value">OSINT + voice social engineering</div>
+      </div>
+      <div class="case-meta-item">
+        <div class="cm-label">Engagement window</div>
+        <div class="cm-value">6 days end-to-end</div>
+      </div>
+    </div>
+    <a class="btn btn-primary btn-sm" onclick="showPage('case-studies')">Read the full case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+  </div>
+  <div class="case-feature-number fade-up">
+    <div class="cfn-stat"><em>2 of 2</em></div>
+    <div class="cfn-caption">pretexts successfully granted initial access and persistent foothold — a Medical Practitioner impersonation and a Contact Centre Agent impersonation, both inside 18 minutes on the phone.</div>
+    <div class="cfn-row"><span>Time on first call</span><span>18 min</span></div>
+    <div class="cfn-row" style="border-top:none;padding-top:10px"><span>Systems reached</span><span>Imaging Portal · M365 · Remote Desktop</span></div>
+    <div class="cfn-row" style="border-top:none;padding-top:10px"><span>Stakeholders aware in advance</span><span>3 people only</span></div>
+  </div>
+</div>
+</div>
+</section>
+
+<!-- Frameworks Overview -->
+<section class="section section-alt">
+<div class="container">
+<div class="section-header editorial fade-up">
+  <div>
+    <span class="section-number">02 — Compliance</span>
+    <h2 class="section-title">Every framework your <em>regulators and auditors</em> expect.</h2>
+  </div>
+  <p class="section-sub">Australian and APAC frameworks first — implemented, operated, and audit-ready. We hold the accreditations that let us assess against them, not just talk about them.</p>
+</div>
+
+<div style="margin-bottom:20px;color:var(--ink-mute);font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;font-weight:700">Australia &mdash; Government &amp; Critical Infrastructure</div>
+<div class="grid-4" style="margin-bottom:40px">
+  <div class="card fade-up" onclick="showPage('irap')" style="text-align:center;padding:28px 20px"><div style="width:52px;height:52px;border-radius:50%;background:var(--teal-glow);margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.78rem;color:var(--teal)">IRAP</div><h3 style="font-size:1rem">IRAP</h3><p style="font-size:.82rem">ASD-endorsed assessments for OFFICIAL:Sensitive and PROTECTED systems</p></div>
+  <div class="card fade-up" onclick="showPage('essential8')" style="text-align:center;padding:28px 20px"><div style="width:52px;height:52px;border-radius:50%;background:var(--teal-glow);margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.76rem;color:var(--teal)">E8</div><h3 style="font-size:1rem">Essential Eight</h3><p style="font-size:.82rem">ACSC baseline mitigation strategies and maturity uplift</p></div>
+  <div class="card fade-up" style="text-align:center;padding:28px 20px"><div style="width:52px;height:52px;border-radius:50%;background:var(--teal-glow);margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.78rem;color:var(--teal)">ISM</div><h3 style="font-size:1rem">ISM &amp; PSPF</h3><p style="font-size:.82rem">Information Security Manual and Protective Security Policy Framework alignment</p></div>
+  <div class="card fade-up" style="text-align:center;padding:28px 20px"><div style="width:52px;height:52px;border-radius:50%;background:var(--teal-glow);margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.74rem;color:var(--teal)">SOCI</div><h3 style="font-size:1rem">SOCI Act</h3><p style="font-size:.82rem">Critical infrastructure obligations, RMP attestation, and CIRMP support</p></div>
+</div>
+
+<div style="margin-bottom:20px;color:var(--ink-mute);font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;font-weight:700">Australia &mdash; Financial Services, Healthcare &amp; Privacy</div>
+<div class="grid-4" style="margin-bottom:40px">
+  <div class="card fade-up" onclick="showPage('cps234')" style="text-align:center;padding:28px 20px"><div style="width:52px;height:52px;border-radius:50%;background:var(--teal-glow);margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.76rem;color:var(--teal)">CPS</div><h3 style="font-size:1rem">APRA CPS 234</h3><p style="font-size:.82rem">Information security for APRA-regulated entities and superannuation</p></div>
+  <div class="card fade-up" style="text-align:center;padding:28px 20px"><div style="width:52px;height:52px;border-radius:50%;background:var(--teal-glow);margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.74rem;color:var(--teal)">CPS230</div><h3 style="font-size:1rem">APRA CPS 230</h3><p style="font-size:.82rem">Operational risk management and third-party service-provider controls</p></div>
+  <div class="card fade-up" style="text-align:center;padding:28px 20px"><div style="width:52px;height:52px;border-radius:50%;background:var(--teal-glow);margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.7rem;color:var(--teal)">PRIVACY</div><h3 style="font-size:1rem">Privacy Act &amp; APPs</h3><p style="font-size:.82rem">Australian Privacy Principles, NDB scheme, and OAIC readiness</p></div>
+  <div class="card fade-up" onclick="showPage('soc2')" style="text-align:center;padding:28px 20px"><div style="width:52px;height:52px;border-radius:50%;background:var(--teal-glow);margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;color:var(--teal)">SOC</div><h3 style="font-size:1rem">SOC 2 Type II</h3><p style="font-size:.82rem">For APAC SaaS and tech firms selling into US enterprise</p></div>
+</div>
+
+<div style="margin-bottom:20px;color:var(--ink-mute);font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;font-weight:700">International Standards Recognised in APAC</div>
+<div class="grid-4">
+  <div class="card fade-up" onclick="showPage('iso27001')" style="text-align:center;padding:28px 20px"><div style="width:52px;height:52px;border-radius:50%;background:var(--teal-glow);margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;color:var(--teal)">ISO</div><h3 style="font-size:1rem">ISO/IEC 27001:2022</h3><p style="font-size:.82rem">Full ISMS build, gap analysis, and JAS-ANZ certification</p></div>
+  <div class="card fade-up" onclick="showPage('pcidss')" style="text-align:center;padding:28px 20px"><div style="width:52px;height:52px;border-radius:50%;background:var(--teal-glow);margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;color:var(--teal)">PCI</div><h3 style="font-size:1rem">PCI DSS 4.0</h3><p style="font-size:.82rem">QSAC-led scoping, gap remediation, SAQ and ROC preparation</p></div>
+  <div class="card fade-up" style="text-align:center;padding:28px 20px"><div style="width:52px;height:52px;border-radius:50%;background:var(--teal-glow);margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.74rem;color:var(--teal)">42001</div><h3 style="font-size:1rem">ISO/IEC 42001</h3><p style="font-size:.82rem">AI management systems for organisations deploying or building AI</p></div>
+  <div class="card fade-up" onclick="showPage('nist')" style="text-align:center;padding:28px 20px"><div style="width:52px;height:52px;border-radius:50%;background:var(--teal-glow);margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;color:var(--teal)">NIST</div><h3 style="font-size:1rem">NIST CSF 2.0</h3><p style="font-size:.82rem">Govern, Identify, Protect, Detect, Respond, Recover</p></div>
+</div>
+</div>
+</section>
+
+<!-- Industries Overview -->
+<section class="section">
+<div class="container">
+<div class="section-header editorial fade-up">
+  <div>
+    <span class="section-number">03 — Industries</span>
+    <h2 class="section-title">Securing the sectors that <em>can't afford a headline</em>.</h2>
+  </div>
+  <p class="section-sub">Four sectors, one focus — organisations where security is driven by regulatory pressure, audit scrutiny, and operational risk. Built for the regulated and high-accountability environments that define the Australian mid-market.</p>
+</div>
+<div class="ind-detail-grid">
+  <div class="ind-detail-card fade-up" onclick="showPage('ind-healthcare')">
+    <div class="ind-banner" style="background:linear-gradient(90deg,var(--rose),var(--amber))"></div>
+    <div class="ind-body">
+      <h3>Regulated Healthcare</h3>
+      <p>Hospitals, diagnostic imaging, aged care, and digital health providers. High breach impact, strict notification requirements, and oversight under OAIC, the Privacy Act, and sector-specific frameworks.</p>
+      <div class="ind-tags"><span class="tag">Privacy Act</span><span class="tag">Essential 8</span><span class="tag">ISO 27001</span></div>
+      <div class="card-link">Explore healthcare →</div>
+    </div>
+  </div>
+  <div class="ind-detail-card fade-up" onclick="showPage('ind-finance')">
+    <div class="ind-banner"></div>
+    <div class="ind-body">
+      <h3>Financial Services &amp; Asset Finance</h3>
+      <p>Insurance, wealth, lending, and payment processors operating under APRA, PCI DSS, CPS 234, and legacy data retention requirements — with increasing board-level accountability for cyber risk.</p>
+      <div class="ind-tags"><span class="tag">APRA CPS 234</span><span class="tag">CPS 230</span><span class="tag">PCI DSS</span></div>
+      <div class="card-link">Explore financial services →</div>
+    </div>
+  </div>
+  <div class="ind-detail-card fade-up" onclick="showPage('ind-profserv')">
+    <div class="ind-banner" style="background:linear-gradient(90deg,var(--amber),var(--teal))"></div>
+    <div class="ind-body">
+      <h3>Government &amp; Critical Infrastructure</h3>
+      <p>State government, infrastructure operators, and publicly funded programmes. Aligned to ISM, PSPF, SOCI Act, and IRAP requirements with strict assurance and reporting expectations.</p>
+      <div class="ind-tags"><span class="tag">IRAP</span><span class="tag">ISM / PSPF</span><span class="tag">SOCI Act</span></div>
+      <div class="card-link">Explore government →</div>
+    </div>
+  </div>
+  <div class="ind-detail-card fade-up" onclick="showPage('ind-saas')">
+    <div class="ind-banner" style="background:linear-gradient(90deg,var(--blue),var(--teal))"></div>
+    <div class="ind-body">
+      <h3>Professional &amp; Industrial Services</h3>
+      <p>Consulting firms, SaaS providers, manufacturers, and PE-backed organisations. Security driven by supply chain risk, due diligence, and investor-led governance expectations.</p>
+      <div class="ind-tags"><span class="tag">ISO 27001</span><span class="tag">SOC 2</span><span class="tag">Essential 8</span></div>
+      <div class="card-link">Explore professional services →</div>
+    </div>
+  </div>
+</div>
+</div>
+</section>
+
+<!-- Why CypherLeap -->
+<section class="section section-alt">
+<div class="container">
+<div class="section-header editorial fade-up">
+  <div>
+    <span class="section-number">04 — The difference</span>
+    <h2 class="section-title">Why high-growth teams <em>pick us</em>.</h2>
+  </div>
+  <p class="section-sub">We're not the cheapest option in the market and we're not trying to be. We're the firm you bring in when the next audit, regulator, or incident can't go badly — and you need people who will treat your program like it's their own.</p>
+</div>
+<div class="grid-2">
+  <div>
+    <div class="process-steps">
+      <div class="process-step fade-up"><div class="step-num">01</div><div class="step-content"><h4>Built for scale-up complexity</h4><p>Purpose-built for companies growing across regions, product lines, and regulatory regimes simultaneously. Senior-level expertise, no enterprise bloat.</p></div></div>
+      <div class="process-step fade-up"><div class="step-num">02</div><div class="step-content"><h4>One accountable team, end to end</h4><p>vCISO, GRC, SIEM, pen testing, IT — all under one roof. One vendor, one contract, one team that knows your environment as well as you do.</p></div></div>
+      <div class="process-step fade-up"><div class="step-num">03</div><div class="step-content"><h4>Audit outcomes, not audit advice</h4><p>We don't hand you a report and leave. We build the ISMS, write the policies, run the risk register, and walk beside you through every audit. 98% first-time pass rate.</p></div></div>
+      <div class="process-step fade-up"><div class="step-num">04</div><div class="step-content"><h4>Global coverage, local fluency</h4><p>Multi-region delivery across AU, EU, UK, and US — with analysts who speak to your regulators in the language they expect: theirs.</p></div></div>
+    </div>
+  </div>
+  <div class="fade-up">
+    <div class="testimonial named">
+      <blockquote><span class="placeholder">[Approved client quote goes here. Speak to the scale of the environment, the managed SIEM/CTI relationship, and a specific outcome. 3 to 4 sentences. Anonymised attribution.]</span></blockquote>
+      <div class="t-author">
+        <div class="t-avatar">DI</div>
+        <div>
+          <div class="t-name"><span class="placeholder">[Role / Title]</span></div>
+          <div class="t-role">Critical Healthcare Infrastructure Operator (anonymised)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</section>
+
+<!-- CTA -->
+<section class="section cta-section">
+<div class="container">
+<div class="cta-box fade-up">
+  <h2>Ready to <em>leap ahead</em> on cybersecurity?</h2>
+  <p>A 30-minute discovery call, a clear picture of your risk posture, and a specific path to get where you need to be. No sales theatre.</p>
+  <div class="cta-buttons">
+    <a class="btn btn-primary" onclick="showPage('contact')">Book a discovery call →</a>
+    <a class="btn btn-outline" onclick="showPage('resources')">Read the intelligence brief</a>
+  </div>
+</div>
+</div>
+</section>
+</div>
+
+
+<!-- ═══════════════════════ SERVICE PAGES ═══════════════════════ -->
+
+<!-- ── vCISO ── -->
+<div class="page" id="page-vciso">
+<section class="detail-hero"><div class="container">
+<div class="eyebrow">Solutions / Virtual CISO</div>
+<h1>Executive cybersecurity leadership, <em>on demand</em></h1>
+<p class="lead">A dedicated Virtual Chief Information Security Officer who builds your security strategy, manages risk, reports to your board, and leads your compliance program — at a fraction of the cost of a full-time hire.</p>
+<div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-primary" onclick="showPage('contact')">Discuss Your vCISO Needs →</a><a class="btn btn-outline btn-sm" onclick="showPage('contact')">Talk to our team</a></div>
+</div></section>
+
+<section class="section"><div class="container">
+<div class="page-with-sidebar">
+<div class="content-block">
+
+<h2>Why growth-stage companies need a <em>vCISO</em></h2>
+<p>Mid-market organisations between their first enterprise deal and their IPO face the same threat landscape as the ASX 200, but rarely have the budget (or the candidate pool) for a full-time CISO — typically AUD $350K–$500K+ all-in in Australia. The result is a strategic security gap: tactical firefighting replaces proactive risk management, board reporting is ad hoc or nonexistent, and compliance programs stall without executive ownership.</p>
+<p>CypherLeap's vCISO service closes this gap. You get a senior, certified cybersecurity executive — typically IRAP, CISM, CISA, and ISO 27001 Lead Auditor qualified — embedded in your business on a fractional basis. They attend your leadership meetings, own your security roadmap, and are accountable for outcomes.</p>
+
+<h3>What your vCISO delivers</h3>
+<div class="feature-grid">
+  <div class="feature-item"><h4><span class="fi-dot"></span> Security Strategy &amp; Roadmap</h4><p>A 12–36 month security strategy aligned to your business objectives, risk appetite, and budget. Prioritised initiatives with clear ROI and board-ready reporting.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Board &amp; Executive Reporting</h4><p>Monthly or quarterly board packs that translate technical risk into business language. Dashboards covering threat posture, compliance status, and program maturity.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Risk Management</h4><p>Enterprise risk register development and ongoing management. Risk assessments, treatment plans, and integration with your broader ERM framework.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Compliance Leadership</h4><p>Ownership of your compliance program across ISO 27001, Essential 8, APRA CPS 234, PCI DSS, and other frameworks. Audit preparation and liaison with external auditors.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Vendor &amp; Third-Party Management</h4><p>Security due diligence on vendors, supplier risk assessments, and management of vendor security questionnaires coming your way from enterprise clients.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Incident Response Planning</h4><p>Development and testing of your incident response plan, business continuity plan, and disaster recovery procedures. Annual tabletop exercises with your leadership team.</p></div>
+</div>
+
+<h2>Our <em>engagement</em> model</h2>
+<div class="process-steps">
+  <div class="process-step"><div class="step-num">1</div><div class="step-content"><h4>Discovery &amp; Assessment</h4><p>We start with a comprehensive security posture assessment — reviewing your current controls, policies, risk landscape, and compliance obligations. This gives us the baseline to build from.</p></div></div>
+  <div class="process-step"><div class="step-num">2</div><div class="step-content"><h4>Strategy Development</h4><p>Your vCISO develops a prioritised security roadmap tailored to your industry, regulatory requirements, and growth plans. Each initiative is costed and sequenced for maximum impact.</p></div></div>
+  <div class="process-step"><div class="step-num">3</div><div class="step-content"><h4>Ongoing Execution &amp; Governance</h4><p>Your vCISO embeds into your operating rhythm — attending leadership meetings, managing the security program, driving compliance initiatives, and continuously adapting the strategy as your business evolves.</p></div></div>
+  <div class="process-step"><div class="step-num">4</div><div class="step-content"><h4>Reporting &amp; Continuous Improvement</h4><p>Regular board reporting, quarterly risk reviews, annual strategy refresh, and maturity tracking against industry benchmarks ensure your program keeps pace with evolving threats.</p></div></div>
+</div>
+
+<div class="cta-inline">
+  <h3>Need a security leader <em>this month</em>?</h3>
+  <p>Our vCISOs can start within two weeks. No recruitment fees, no onboarding delays.</p>
+  <a class="btn btn-primary" onclick="showPage('contact')">Book a Discovery Call →</a>
+</div>
+
+</div>
+<div class="sidebar">
+  <div class="sidebar-card">
+    <h4>vCISO at a Glance</h4>
+    <div class="stat-row"><span class="stat-label">Engagement</span><span class="stat-value">Fractional / retainer</span></div>
+    <div class="stat-row"><span class="stat-label">Typical commitment</span><span class="stat-value">2–4 days/month</span></div>
+    <div class="stat-row"><span class="stat-label">Cost vs. FTE</span><span class="stat-value">60–70% savings</span></div>
+    <div class="stat-row"><span class="stat-label">Time to start</span><span class="stat-value">~2 weeks</span></div>
+    <div class="stat-row"><span class="stat-label">Certifications</span><span class="stat-value">CISM, CISA, ISO LA</span></div>
+  </div>
+  <div class="sidebar-card">
+    <h4>Related Services</h4>
+    <div class="sc-list">
+      <a onclick="showPage('mgrc')">Managed GRC</a>
+      <a onclick="showPage('siem')">Managed SIEM</a>
+      <a onclick="showPage('cti')">CTI &amp; EASM</a>
+      <a onclick="showPage('iso27001')">ISO 27001</a>
+      <a onclick="showPage('essential8')">Essential Eight</a>
+    </div>
+  </div>
+</div>
+</div>
+</div></section>
+</div>
+
+<!-- ── Managed GRC ── -->
+<div class="page" id="page-mgrc">
+<section class="detail-hero"><div class="container">
+<div class="eyebrow">Solutions / Managed GRC</div>
+<h1>Governance, risk &amp; compliance <em>on autopilot</em></h1>
+<p class="lead">We build your Information Security Management System from scratch, manage your policies and risk register, and prepare you for every audit — IRAP, ISO 27001, Essential 8, APRA CPS 234, PCI DSS, SOC 2, and beyond.</p>
+<div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-primary" onclick="showPage('contact')">Start Your GRC Program →</a></div>
+</div></section>
+<section class="section"><div class="container">
+<div class="page-with-sidebar">
+<div class="content-block">
+
+<h2>The mid-market <em>compliance</em> challenge</h2>
+<p>Your enterprise clients are sending you security questionnaires. Your insurer wants evidence of controls. Your board is asking about risk. And regulators like APRA, ASD, and the OAIC are tightening expectations every year. But building an internal GRC function from scratch requires specialist knowledge, expensive tooling, and months of dedicated effort.</p>
+<p>CypherLeap's Managed GRC service gives you a fully operational governance, risk, and compliance program — built by experts, maintained continuously, and always audit-ready.</p>
+
+<h3>What's included</h3>
+<div class="feature-grid">
+  <div class="feature-item"><h4><span class="fi-dot"></span> ISMS Development</h4><p>We build your complete Information Security Management System — policies, procedures, standards, and guidelines tailored to your business and aligned to your target frameworks.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Risk Register &amp; Assessments</h4><p>Comprehensive risk assessments using ISO 27005 methodology. Ongoing risk register management with treatment plans, risk owners, and quarterly reviews.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Policy Lifecycle Management</h4><p>We draft, review, approve, distribute, and maintain all security policies. Annual reviews, version control, and employee attestation tracking included.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Internal Audit Program</h4><p>Annual internal audit cycle covering all ISMS controls. Findings tracked to closure with remediation plans and evidence collection.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Compliance Monitoring</h4><p>Continuous compliance monitoring against your target frameworks. Automated evidence collection, control testing, and gap tracking via an industry-leading GRC platform.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> External Audit Preparation</h4><p>We prepare all audit evidence, manage auditor relationships, coordinate interviews, and ensure zero surprises on audit day. 100% pass rate to date.</p></div>
+</div>
+
+<h2>How we <em>deliver</em></h2>
+<div class="process-steps">
+  <div class="process-step"><div class="step-num">1</div><div class="step-content"><h4>Scoping &amp; Gap Analysis</h4><p>We identify your target frameworks, assess your current maturity, and produce a gap analysis with a prioritised remediation roadmap and timeline to certification.</p></div></div>
+  <div class="process-step"><div class="step-num">2</div><div class="step-content"><h4>ISMS Build &amp; Implementation</h4><p>We build your ISMS from the ground up — drafting all policies, implementing controls, standing up your risk management framework, and configuring your GRC platform.</p></div></div>
+  <div class="process-step"><div class="step-num">3</div><div class="step-content"><h4>Audit Readiness &amp; Certification</h4><p>We run internal audits, management review meetings, and mock assessments to ensure you're fully prepared. We coordinate with your external auditor through certification.</p></div></div>
+  <div class="process-step"><div class="step-num">4</div><div class="step-content"><h4>Ongoing Management</h4><p>Post-certification, we manage your compliance program continuously — annual risk reviews, policy updates, surveillance audits, and adapting to new regulatory requirements.</p></div></div>
+</div>
+
+<div class="cta-inline">
+  <h3>Audit coming up? We can get you <em>ready</em>.</h3>
+  <p>Most clients are audit-ready in 3–6 months. Talk to us about your timeline.</p>
+  <a class="btn btn-primary" onclick="showPage('contact')">Get a GRC Assessment →</a>
+</div>
+
+</div>
+<div class="sidebar">
+  <div class="sidebar-card">
+    <h4>Managed GRC at a Glance</h4>
+    <div class="stat-row"><span class="stat-label">Time to certification</span><span class="stat-value">3–6 months</span></div>
+    <div class="stat-row"><span class="stat-label">Audit pass rate</span><span class="stat-value">100%</span></div>
+    <div class="stat-row"><span class="stat-label">Frameworks supported</span><span class="stat-value">8+</span></div>
+    <div class="stat-row"><span class="stat-label">Policies included</span><span class="stat-value">30+ templates</span></div>
+    <div class="stat-row"><span class="stat-label">Engagement</span><span class="stat-value">Monthly retainer</span></div>
+  </div>
+  <div class="sidebar-card">
+    <h4>Supported Frameworks</h4>
+    <div class="sc-list">
+      <a onclick="showPage('iso27001')">ISO 27001:2022</a>
+      <a onclick="showPage('essential8')">Essential Eight</a>
+      <a onclick="showPage('pcidss')">PCI DSS 4.0</a>
+      <a onclick="showPage('cps234')">APRA CPS 234</a>
+      <a onclick="showPage('soc2')">SOC 2</a>
+      <a onclick="showPage('nist')">NIST CSF</a>
+      <a onclick="showPage('irap')">IRAP</a>
+    </div>
+  </div>
+</div>
+</div>
+</div></section>
+</div>
+
+<!-- ── Managed SIEM ── -->
+<div class="page" id="page-siem">
+<section class="detail-hero"><div class="container">
+<div class="eyebrow">Solutions / Managed SIEM</div>
+<h1>24/7 threat monitoring <em>by experts</em></h1>
+<p class="lead">We are SIEM-agnostic. Our managed service partners us with industry-leading detection platforms and pairs them with senior analysts who deploy, tune, and operate them round the clock. Calibrated to the environment, stack, and compliance requirements you already have.</p>
+<div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-primary" onclick="showPage('contact')">Explore Managed SIEM →</a></div>
+</div></section>
+<section class="section"><div class="container">
+<div class="page-with-sidebar">
+<div class="content-block">
+<h2>Why managed SIEM beats <em>DIY</em></h2>
+<p>Deploying a SIEM is only half the battle. Without 24/7 analyst coverage, tuned detection rules, and a structured response process, you end up drowning in alerts with no one to action them. Most mid-market businesses don't have the team or budget to run a SOC internally.</p>
+<p>CypherLeap operates your SIEM as a fully managed service. We select the right platform for your environment from our roster of industry-leading partners, deploy and configure it across your stack, tune detection rules to minimise false positives, and provide round-the-clock monitoring with senior analysts. Not automated playbooks.</p>
+
+<h3>What you get</h3>
+<div class="feature-grid">
+  <div class="feature-item"><h4><span class="fi-dot"></span> Deployment &amp; Configuration</h4><p>Full deployment of your selected SIEM platform across your endpoints, servers, cloud workloads, and network. Log source onboarding, agent rollout, and baseline tuning included.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> 24/7 Analyst Monitoring</h4><p>Our security analysts monitor your environment around the clock. Every alert is triaged by a human before it reaches you — no alert fatigue, no noise.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Threat Detection &amp; Response</h4><p>Behavioural analytics, attacker behaviour detection, and correlation rules tuned to your environment. When threats are confirmed, we contain and respond in minutes.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Incident Escalation &amp; Reporting</h4><p>Structured escalation procedures with defined SLAs. Monthly reporting on detections, incidents, MTTD, MTTR, and recommendations for posture improvement.</p></div>
+</div>
+
+<div class="process-steps">
+  <div class="process-step"><div class="step-num">1</div><div class="step-content"><h4>Environment Assessment</h4><p>We audit your current infrastructure, identify log sources, and design the SIEM architecture to provide maximum visibility with minimum overhead.</p></div></div>
+  <div class="process-step"><div class="step-num">2</div><div class="step-content"><h4>Deployment &amp; Tuning</h4><p>Platform deployment, agent rollout, log source integration. Two weeks of intensive tuning to establish baselines and suppress false positives.</p></div></div>
+  <div class="process-step"><div class="step-num">3</div><div class="step-content"><h4>Operational Handover</h4><p>24/7 monitoring goes live. Escalation procedures confirmed, runbooks documented, and your team briefed on the engagement model.</p></div></div>
+  <div class="process-step"><div class="step-num">4</div><div class="step-content"><h4>Continuous Improvement</h4><p>Monthly threat reviews, quarterly detection tuning, and annual architecture reviews ensure your SIEM keeps pace with your evolving environment and threat landscape.</p></div></div>
+</div>
+
+<div class="cta-inline">
+  <h3>See what you're <em>missing</em>.</h3>
+  <p>Most businesses have critical visibility gaps. Let us show you yours — free of charge.</p>
+  <a class="btn btn-primary" onclick="showPage('contact')">Request a SIEM Assessment →</a>
+</div>
+</div>
+<div class="sidebar">
+  <div class="sidebar-card">
+    <h4>Managed SIEM at a Glance</h4>
+    <div class="stat-row"><span class="stat-label">Platform</span><span class="stat-value">Vendor-agnostic</span></div>
+    <div class="stat-row"><span class="stat-label">Monitoring</span><span class="stat-value">24/7/365</span></div>
+    <div class="stat-row"><span class="stat-label">Avg. MTTD</span><span class="stat-value">&lt; 15 minutes</span></div>
+    <div class="stat-row"><span class="stat-label">Deployment</span><span class="stat-value">2–4 weeks</span></div>
+    <div class="stat-row"><span class="stat-label">False positive rate</span><span class="stat-value">&lt; 5%</span></div>
+  </div>
+</div>
+</div>
+</div></section>
+</div>
+
+<!-- ── CTI & EASM ── -->
+<div class="page" id="page-cti">
+<section class="detail-hero"><div class="container">
+<div class="eyebrow">Solutions / Cyber Threat Intelligence &amp; EASM</div>
+<h1>See your attack surface through <em>the adversary's eyes</em></h1>
+<p class="lead">Continuous dark web monitoring, leaked credential detection, and external attack surface management. We find your exposures before threat actors do — and help you close them fast.</p>
+<div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-primary" onclick="showPage('contact')">Start Monitoring →</a></div>
+</div></section>
+<section class="section"><div class="container">
+<div class="page-with-sidebar">
+<div class="content-block">
+<h2>Your digital footprint is <em>bigger than you think</em></h2>
+<p>Every cloud service, subdomain, API endpoint, employee email, and SaaS tool expands your external attack surface. Meanwhile, threat actors are trading your stolen credentials on dark web marketplaces, scanning your exposed services, and probing for misconfigured assets — often months before an actual breach.</p>
+<p>CypherLeap's CTI and EASM service gives you continuous visibility into what attackers can see and exploit. We combine automated scanning with human analyst review to deliver actionable intelligence — not just data dumps.</p>
+
+<h3>Service components</h3>
+<div class="feature-grid">
+  <div class="feature-item"><h4><span class="fi-dot"></span> Dark Web Monitoring</h4><p>Continuous surveillance of dark web forums, paste sites, Telegram channels, and criminal marketplaces for your company name, domains, executive names, and credentials.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Credential Leak Detection</h4><p>Real-time alerting when employee credentials appear in data breaches or are offered for sale. Integration with your IAM for immediate password reset enforcement.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> External Attack Surface Mapping</h4><p>Automated discovery and continuous monitoring of all internet-facing assets — subdomains, IP ranges, open ports, cloud storage, APIs, and shadow IT.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Vulnerability Prioritisation</h4><p>Not just scanning — contextual prioritisation based on exploitability, exposure, and business impact. We tell you what to fix first and why.</p></div>
+</div>
+
+<div class="cta-inline">
+  <h3>Free Dark Web <em>Exposure Check</em></h3>
+  <p>See if your company's credentials are already compromised. No obligation, instant results.</p>
+  <a class="btn btn-primary" href="https://socradar.io/free-tools/dark-web-report/partners/cypherleap" target="_blank" rel="noopener">Check My Exposure →</a>
+</div>
+</div>
+<div class="sidebar">
+  <div class="sidebar-card">
+    <h4>CTI &amp; EASM at a Glance</h4>
+    <div class="stat-row"><span class="stat-label">Monitoring</span><span class="stat-value">24/7 continuous</span></div>
+    <div class="stat-row"><span class="stat-label">Alert SLA</span><span class="stat-value">&lt; 4 hours (critical)</span></div>
+    <div class="stat-row"><span class="stat-label">Dark web sources</span><span class="stat-value">50,000+</span></div>
+    <div class="stat-row"><span class="stat-label">Monthly reporting</span><span class="stat-value">Included</span></div>
+  </div>
+</div>
+</div>
+</div></section>
+</div>
+
+<!-- ── Penetration Testing ── -->
+<div class="page" id="page-pentest">
+<section class="detail-hero"><div class="container">
+<div class="eyebrow">Solutions / Penetration Testing</div>
+<h1>Find vulnerabilities <em>before attackers do</em></h1>
+<p class="lead">Manual, expert-led penetration testing across your networks, applications, cloud environments, and APIs. Certified ethical hackers with actionable remediation guidance — not just automated scan dumps.</p>
+<div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-primary" onclick="showPage('contact')">Request a Pen Test Quote →</a></div>
+</div></section>
+<section class="section"><div class="container">
+<div class="page-with-sidebar">
+<div class="content-block">
+<h2>Beyond automated <em>scanning</em></h2>
+<p>Vulnerability scanners find known issues. Our penetration testers think like attackers — chaining vulnerabilities, exploiting business logic flaws, and simulating real-world attack scenarios that automated tools miss entirely.</p>
+
+<h3>Testing types</h3>
+<div class="feature-grid">
+  <div class="feature-item"><h4><span class="fi-dot"></span> External Network Testing</h4><p>Assessment of internet-facing infrastructure — firewalls, VPNs, mail servers, and public services. Identification of exploitable entry points from the outside.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Internal Network Testing</h4><p>Simulates an attacker with internal access. Tests lateral movement paths, privilege escalation, Active Directory security, and network segmentation effectiveness.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Web Application Testing</h4><p>OWASP Top 10 and beyond. Authentication bypass, injection attacks, business logic testing, API security, and session management flaws.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Cloud Security Testing</h4><p>AWS, Azure, and GCP environment testing. IAM misconfigurations, storage permissions, network controls, and cloud-native service security.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Social Engineering</h4><p>Phishing simulations, pretexting calls, and physical security testing. Measures your human layer's resilience against targeted attacks.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Wireless Testing</h4><p>Assessment of wireless networks, rogue access points, WPA2/3 security, and network segregation between corporate and guest networks.</p></div>
+</div>
+
+<h2>Our <em>methodology</em></h2>
+<div class="process-steps">
+  <div class="process-step"><div class="step-num">1</div><div class="step-content"><h4>Scoping &amp; Rules of Engagement</h4><p>We define scope, objectives, testing windows, and escalation procedures. You maintain full control throughout.</p></div></div>
+  <div class="process-step"><div class="step-num">2</div><div class="step-content"><h4>Reconnaissance &amp; Testing</h4><p>Manual and tool-assisted testing following OWASP, PTES, and OSSTMM methodologies. Real attack simulation, not automated scanning.</p></div></div>
+  <div class="process-step"><div class="step-num">3</div><div class="step-content"><h4>Reporting &amp; Debrief</h4><p>Executive summary for leadership and detailed technical report with evidence, risk ratings, and step-by-step remediation guidance for each finding.</p></div></div>
+  <div class="process-step"><div class="step-num">4</div><div class="step-content"><h4>Remediation Validation</h4><p>Free retest of all critical and high findings within 30 days to confirm your fixes are effective.</p></div></div>
+</div>
+</div>
+<div class="sidebar">
+  <div class="sidebar-card">
+    <h4>Pen Testing at a Glance</h4>
+    <div class="stat-row"><span class="stat-label">Methodology</span><span class="stat-value">OWASP / PTES</span></div>
+    <div class="stat-row"><span class="stat-label">Certifications</span><span class="stat-value">eCPPT, OSCP</span></div>
+    <div class="stat-row"><span class="stat-label">Retest</span><span class="stat-value">Free (30 days)</span></div>
+    <div class="stat-row"><span class="stat-label">Typical duration</span><span class="stat-value">1–3 weeks</span></div>
+    <div class="stat-row"><span class="stat-label">Report SLA</span><span class="stat-value">5 business days</span></div>
+  </div>
+</div>
+</div>
+</div></section>
+</div>
+
+<!-- ── Managed IT & Cyber Support ── -->
+<div class="page" id="page-itsupport">
+<section class="detail-hero"><div class="container">
+<div class="eyebrow">Solutions / Managed IT &amp; Cyber Support</div>
+<h1>IT operations secured by <em>cybersecurity-first</em> thinking</h1>
+<p class="lead">Unified IT and cybersecurity operations — endpoint management, identity &amp; access control, cloud infrastructure, and helpdesk — all managed by a team that understands security is foundational, not an add-on.</p>
+<div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-primary" onclick="showPage('contact')">Discuss IT Support →</a></div>
+</div></section>
+<section class="section"><div class="container">
+<div class="content-block" style="max-width:860px">
+<h2>IT and cyber should be <em>one team</em></h2>
+<p>When your IT provider and security provider are separate, gaps emerge. Endpoints get deployed without hardening. Identity configurations drift. Cloud permissions sprawl. And when an incident happens, nobody owns the response.</p>
+<p>CypherLeap delivers IT operations through a cybersecurity lens. Every endpoint we manage is hardened. Every identity we provision follows least-privilege principles. Every cloud resource is configured to security baselines. It's IT management that's secure by default.</p>
+
+<h3>What's included</h3>
+<div class="feature-grid">
+  <div class="feature-item"><h4><span class="fi-dot"></span> Endpoint Management</h4><p>Device provisioning, patching, hardening, and lifecycle management. MDM for mobile. EDR deployment and monitoring included.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Identity &amp; Access Management</h4><p>Azure AD / Entra ID management. MFA enforcement, conditional access policies, privileged access management, and regular access reviews.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Cloud Infrastructure</h4><p>Microsoft 365, Azure, AWS administration. Security baseline configuration, cost optimisation, and cloud posture monitoring.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Helpdesk &amp; User Support</h4><p>Responsive IT helpdesk for your team. Onboarding/offboarding, hardware support, application support, and escalation management.</p></div>
+</div>
+</div>
+</div></section>
+</div>
+
+
+<!-- ═══════════════════════ FRAMEWORK PAGES ═══════════════════════ -->
+
+<!-- ── Essential Eight ── -->
+<div class="page" id="page-essential8">
+<section class="detail-hero"><div class="container">
+<div class="eyebrow">Frameworks / Essential Eight</div>
+<h1>Essential Eight assessment, remediation &amp; <em>maturity uplift</em></h1>
+<p class="lead">The Essential Eight, developed by the Australian Cyber Security Centre (ACSC), is a baseline cybersecurity framework increasingly referenced by enterprise buyers and regulators worldwide. We assess your current maturity level, remediate gaps, and help you reach your target maturity — whether that's ML1, ML2, or ML3.</p>
+<div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-primary" onclick="showPage('contact')">Book an E8 Assessment →</a></div>
+</div></section>
+<section class="section"><div class="container">
+<div class="page-with-sidebar">
+<div class="content-block">
+<h2>What is the <em>Essential Eight</em>?</h2>
+<p>The Essential Eight is a set of eight mitigation strategies recommended by the Australian Signals Directorate (ASD) to protect organisations against cyber threats. Originally published as the "Top 4" and expanded to eight, these strategies address the most common attack vectors and are now a de facto requirement for many Australian government contracts and increasingly expected by enterprise clients and regulators.</p>
+
+<h3>The eight strategies</h3>
+<ul>
+  <li><strong>Application Control</strong> — Prevent execution of unapproved and malicious programs</li>
+  <li><strong>Patch Applications</strong> — Apply patches to applications within defined timeframes</li>
+  <li><strong>Configure Microsoft Office Macro Settings</strong> — Block macros from the internet, only allow vetted macros</li>
+  <li><strong>User Application Hardening</strong> — Configure web browsers and other apps to block risky content</li>
+  <li><strong>Restrict Administrative Privileges</strong> — Limit admin access to those who need it</li>
+  <li><strong>Patch Operating Systems</strong> — Apply OS patches within defined timeframes</li>
+  <li><strong>Multi-Factor Authentication</strong> — Require MFA for all users accessing sensitive systems</li>
+  <li><strong>Regular Backups</strong> — Perform, test, and protect backups of important data</li>
+</ul>
+
+<h2>How CypherLeap <em>delivers</em></h2>
+<div class="process-steps">
+  <div class="process-step"><div class="step-num">1</div><div class="step-content"><h4>Maturity Assessment</h4><p>We assess your current Essential Eight maturity level across all eight strategies using ASD's maturity model. You receive a detailed report showing your current state, gaps, and a prioritised remediation roadmap.</p></div></div>
+  <div class="process-step"><div class="step-num">2</div><div class="step-content"><h4>Remediation &amp; Implementation</h4><p>Our engineers implement the technical controls required to reach your target maturity level. This includes policy configuration, tool deployment, process development, and integration with your existing infrastructure.</p></div></div>
+  <div class="process-step"><div class="step-num">3</div><div class="step-content"><h4>Validation &amp; Evidence</h4><p>We validate all controls are operating effectively and compile the evidence package needed to demonstrate compliance to auditors, regulators, or clients.</p></div></div>
+  <div class="process-step"><div class="step-num">4</div><div class="step-content"><h4>Ongoing Maintenance</h4><p>Essential Eight compliance isn't set-and-forget. We provide ongoing monitoring, patching management, and quarterly maturity reviews to ensure you maintain and improve your posture.</p></div></div>
+</div>
+</div>
+<div class="sidebar">
+  <div class="sidebar-card">
+    <h4>Essential Eight at a Glance</h4>
+    <div class="stat-row"><span class="stat-label">Assessment time</span><span class="stat-value">2–3 weeks</span></div>
+    <div class="stat-row"><span class="stat-label">ML1 remediation</span><span class="stat-value">4–8 weeks</span></div>
+    <div class="stat-row"><span class="stat-label">ML2 remediation</span><span class="stat-value">8–16 weeks</span></div>
+    <div class="stat-row"><span class="stat-label">ML3 remediation</span><span class="stat-value">16–24 weeks</span></div>
+  </div>
+  <div class="sidebar-card">
+    <h4>Who needs Essential Eight?</h4>
+    <div class="sc-list">
+      <a onclick="showPage('ind-finance')">Financial services (APRA)</a>
+      <a onclick="showPage('ind-healthcare')">Healthcare providers</a>
+      <a>Government contractors</a>
+      <a>Defence suppliers (DISP)</a>
+      <a>Any Australian business</a>
+    </div>
+  </div>
+</div>
+</div>
+</div></section>
+</div>
+
+<!-- ── ISO 27001 ── -->
+<div class="page" id="page-iso27001">
+<section class="detail-hero"><div class="container">
+<div class="eyebrow">Frameworks / ISO 27001:2022</div>
+<h1>ISO 27001 certification, <em>end to end</em></h1>
+<p class="lead">From initial gap analysis to certification audit — we build your Information Security Management System, implement every control, and get you certified. 100% audit pass rate.</p>
+<div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-primary" onclick="showPage('contact')">Start ISO 27001 →</a></div>
+</div></section>
+<section class="section"><div class="container">
+<div class="page-with-sidebar">
+<div class="content-block">
+<h2>Why ISO 27001 <em>matters</em></h2>
+<p>ISO 27001 is the standard for information security management. Certification demonstrates to your clients, partners, and regulators that you operate a systematic, auditable approach to managing sensitive information. For growth-stage companies selling into enterprise, it's now a prerequisite for closing deals, passing supplier assessments, and satisfying insurer and regulator expectations across every major market.</p>
+
+<h2>Our ISO 27001 <em>service</em></h2>
+<div class="feature-grid">
+  <div class="feature-item"><h4><span class="fi-dot"></span> Gap Analysis</h4><p>Comprehensive assessment against all ISO 27001:2022 requirements and Annex A controls. Clear gap register with prioritised remediation plan.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> ISMS Development</h4><p>We build your complete ISMS — information security policy, risk assessment methodology, Statement of Applicability, and all supporting policies and procedures.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Risk Assessment</h4><p>ISO 27005-aligned risk assessment identifying threats, vulnerabilities, and impacts. Risk treatment plan with clear ownership and timelines.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Control Implementation</h4><p>Technical and organisational control implementation across all 93 Annex A controls. Evidence collection automated where possible.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Internal Audit</h4><p>Full internal audit cycle by our ISO 27001 Lead Auditors. Findings documented and tracked to closure.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Certification Audit Support</h4><p>We coordinate with your chosen certification body, prepare all evidence, brief staff for interviews, and support you through Stage 1 and Stage 2 audits.</p></div>
+</div>
+</div>
+<div class="sidebar">
+  <div class="sidebar-card">
+    <h4>ISO 27001 at a Glance</h4>
+    <div class="stat-row"><span class="stat-label">Time to certification</span><span class="stat-value">3–6 months</span></div>
+    <div class="stat-row"><span class="stat-label">Annex A controls</span><span class="stat-value">93 controls</span></div>
+    <div class="stat-row"><span class="stat-label">Audit pass rate</span><span class="stat-value">100%</span></div>
+    <div class="stat-row"><span class="stat-label">Cert validity</span><span class="stat-value">3 years</span></div>
+    <div class="stat-row"><span class="stat-label">Surveillance audits</span><span class="stat-value">Annual</span></div>
+  </div>
+</div>
+</div>
+</div></section>
+</div>
+
+<!-- ── PCI DSS ── -->
+<div class="page" id="page-pcidss">
+<section class="detail-hero"><div class="container">
+<div class="eyebrow">Frameworks / PCI DSS 4.0</div>
+<h1>PCI DSS 4.0 compliance for <em>payment security</em></h1>
+<p class="lead">Whether you need SAQ completion, gap remediation, or full ROC preparation — our PCI QSA-qualified team ensures your cardholder data environment meets every requirement of PCI DSS version 4.0.</p>
+<div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-primary" onclick="showPage('contact')">Discuss PCI Compliance →</a></div>
+</div></section>
+<section class="section"><div class="container">
+<div class="content-block" style="max-width:860px">
+<h2>PCI DSS 4.0: What's <em>changed</em></h2>
+<p>PCI DSS 4.0 introduced the customised approach (allowing organisations to meet security objectives through alternative controls), expanded multi-factor authentication requirements, strengthened e-commerce and anti-phishing requirements, and added targeted risk analysis as a new compliance validation method. All organisations must be fully compliant with v4.0 requirements, including the future-dated requirements that took effect in March 2025.</p>
+
+<h3>How we help</h3>
+<div class="feature-grid">
+  <div class="feature-item"><h4><span class="fi-dot"></span> Scoping &amp; Data Flow Analysis</h4><p>We identify where cardholder data lives, how it flows, and define the boundaries of your cardholder data environment to ensure accurate scoping.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Gap Assessment</h4><p>Detailed assessment against all PCI DSS 4.0 requirements. Gap register with remediation roadmap, effort estimates, and priority ranking.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Remediation Support</h4><p>Hands-on technical and process remediation. Network segmentation, encryption, access controls, logging, and policy development.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> SAQ / ROC Preparation</h4><p>We prepare all evidence, complete your Self-Assessment Questionnaire, or prepare you for a Report on Compliance assessment by a QSA.</p></div>
+</div>
+</div>
+</div></section>
+</div>
+
+<!-- ── APRA CPS 234 ── -->
+<div class="page" id="page-cps234">
+<section class="detail-hero"><div class="container">
+<div class="eyebrow">Frameworks / APRA CPS 234</div>
+<h1>APRA CPS 234 compliance for <em>financial services</em></h1>
+<p class="lead">CPS 234 requires APRA-regulated entities to maintain an information security capability commensurate with the threats they face. We help banks, insurers, super funds, and fintechs meet every requirement — from board-level governance to technical controls and incident notification.</p>
+<div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-primary" onclick="showPage('contact')">Start CPS 234 Compliance →</a></div>
+</div></section>
+<section class="section"><div class="container">
+<div class="content-block" style="max-width:860px">
+<h2>CPS 234 <em>requirements</em></h2>
+<p>APRA CPS 234 mandates that APRA-regulated entities clearly define information security roles and responsibilities, maintain an information security capability commensurate with the size and extent of threats, implement controls to protect information assets, test the effectiveness of those controls, and notify APRA of material information security incidents.</p>
+
+<h3>Our CPS 234 service</h3>
+<div class="feature-grid">
+  <div class="feature-item"><h4><span class="fi-dot"></span> Gap Assessment</h4><p>Assessment against all CPS 234 requirements and APRA's supporting guidance (CPG 234). Clear view of gaps and remediation priorities.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Information Security Capability</h4><p>We help you build and demonstrate an information security capability proportionate to your threat environment — including people, processes, and technology.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Third-Party Management</h4><p>Assessment of third-party and related-party information security arrangements. Vendor risk assessment framework and ongoing monitoring.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Testing &amp; Assurance</h4><p>Design and execution of your control testing program, including systematic testing per CPS 234 requirements and independent assurance activities.</p></div>
+</div>
+</div>
+</div></section>
+</div>
+
+<!-- ── IRAP ── -->
+<div class="page" id="page-irap">
+<section class="detail-hero"><div class="container">
+<div class="eyebrow">Frameworks / IRAP</div>
+<h1>IRAP assessment and preparation. <em>Under one roof.</em></h1>
+<p class="lead">The Information Security Registered Assessors Program is the Australian Government's framework for assessing systems that store, process, or communicate government information. CypherLeap delivers both the preparation and the formal assessment under one roof, with ASD-endorsed IRAP assessors on the team.</p>
+<div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-primary" onclick="showPage('contact')">Start an IRAP engagement →</a></div>
+</div></section>
+<section class="section"><div class="container">
+<div class="content-block" style="max-width:860px">
+
+<h2>Two pathways. <em>Under one roof.</em></h2>
+<div class="feature-grid">
+  <div class="feature-item"><h4><span class="fi-dot"></span> IRAP Assessment</h4><p>For organisations whose systems are ready, our in-house ASD-endorsed assessors deliver the formal Stage 1 and Stage 2 assessment against the ISM and PSPF, end to end.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> IRAP Preparation</h4><p>For organisations not yet ready, we run the program against ISM controls, build the System Security Plan, harden the environment, and stay engaged through to assessment.</p></div>
+</div>
+<p>Many clients engage both pathways with us. That removes the prep-to-assessor hand-off that fragments most IRAP engagements and adds time and cost to the timeline.</p>
+
+<h2>Who needs <em>IRAP</em>?</h2>
+<p>If you provide services to Australian Government agencies, whether cloud hosting, SaaS, managed services, or consulting, you may need to demonstrate your systems meet the requirements of the Australian Government's Information Security Manual (ISM). IRAP assessments are conducted by ASD-endorsed assessors and are required for systems handling PROTECTED and OFFICIAL:Sensitive classified information.</p>
+
+<h3>How preparation works</h3>
+<div class="process-steps">
+  <div class="process-step"><div class="step-num">1</div><div class="step-content"><h4>ISM Gap Analysis</h4><p>Assessment of your systems against relevant ISM controls for your target classification. Clear gap register and remediation roadmap.</p></div></div>
+  <div class="process-step"><div class="step-num">2</div><div class="step-content"><h4>Remediation &amp; Hardening</h4><p>Implementation of required security controls. Network segmentation, encryption, access controls, logging, endpoint hardening, and administrative procedures.</p></div></div>
+  <div class="process-step"><div class="step-num">3</div><div class="step-content"><h4>Documentation Preparation</h4><p>System Security Plan (SSP), Standard Operating Procedures, and all supporting documentation required for IRAP assessment.</p></div></div>
+  <div class="process-step"><div class="step-num">4</div><div class="step-content"><h4>Handover into Assessment</h4><p>Whether the formal assessment is delivered by our in-house IRAP assessors or by a third party, we coordinate the handover, prepare evidence, brief your team, and stay engaged through Stage 1 and Stage 2.</p></div></div>
+</div>
+</div>
+</div></section>
+</div>
+
+<!-- ── NIST CSF ── -->
+<div class="page" id="page-nist">
+<section class="detail-hero"><div class="container">
+<div class="eyebrow">Frameworks / NIST CSF</div>
+<h1>NIST Cybersecurity Framework <em>assessment &amp; implementation</em></h1>
+<p class="lead">The NIST CSF provides a flexible, risk-based framework for managing cybersecurity risk. We help you assess your current posture against NIST's five core functions and implement a program that measurably reduces risk.</p>
+<div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-primary" onclick="showPage('contact')">Start NIST Assessment →</a></div>
+</div></section>
+<section class="section"><div class="container">
+<div class="content-block" style="max-width:860px">
+<h2>The five <em>core functions</em></h2>
+<div class="feature-grid">
+  <div class="feature-item"><h4><span class="fi-dot"></span> Identify</h4><p>Understand your business context, assets, risks, and governance structures. Asset management, risk assessment, and supply chain risk management.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Protect</h4><p>Implement safeguards to ensure delivery of critical services. Access control, awareness training, data security, and protective technology.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Detect</h4><p>Develop capabilities to identify cybersecurity events. Continuous monitoring, anomaly detection, and security event management.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Respond</h4><p>Establish response procedures for detected cybersecurity events. Response planning, communications, analysis, mitigation, and improvements.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Recover</h4><p>Develop resilience and restore capabilities impaired by cybersecurity events. Recovery planning, improvements, and communications.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Govern (CSF 2.0)</h4><p>Establish and monitor cybersecurity risk management strategy, expectations, and policy. Organisational context, oversight, and supply chain risk.</p></div>
+</div>
+</div>
+</div></section>
+</div>
+
+<!-- ── SOC 2 ── -->
+<div class="page" id="page-soc2">
+<section class="detail-hero"><div class="container">
+<div class="eyebrow">Frameworks / SOC 2</div>
+<h1>SOC 2 readiness &amp; <em>audit preparation</em></h1>
+<p class="lead">SOC 2 compliance is essential for SaaS companies selling to enterprise clients. We prepare you for Type I and Type II audits — building controls, gathering evidence, and ensuring you pass first time.</p>
+<div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-primary" onclick="showPage('contact')">Start SOC 2 Preparation →</a></div>
+</div></section>
+<section class="section"><div class="container">
+<div class="content-block" style="max-width:860px">
+<h2>SOC 2 for <em>growing SaaS</em></h2>
+<p>If your sales team keeps hearing "do you have SOC 2?" from enterprise prospects, it's time. SOC 2 Type II demonstrates that your controls have been operating effectively over a sustained period — typically 6–12 months. It's the trust credential that unlocks enterprise revenue.</p>
+
+<h3>Trust service criteria we cover</h3>
+<ul>
+  <li><strong>Security</strong> — Protection against unauthorised access (always included)</li>
+  <li><strong>Availability</strong> — System uptime and operational resilience</li>
+  <li><strong>Processing Integrity</strong> — Accurate and complete data processing</li>
+  <li><strong>Confidentiality</strong> — Protection of confidential information</li>
+  <li><strong>Privacy</strong> — Collection, use, retention, and disposal of personal information</li>
+</ul>
+
+<h3>Our SOC 2 service</h3>
+<div class="process-steps">
+  <div class="process-step"><div class="step-num">1</div><div class="step-content"><h4>Readiness Assessment</h4><p>We assess your current controls against SOC 2 trust service criteria. Gap analysis with prioritised remediation roadmap and timeline to audit.</p></div></div>
+  <div class="process-step"><div class="step-num">2</div><div class="step-content"><h4>Control Design &amp; Implementation</h4><p>We design and implement all required controls — policies, procedures, technical configurations, and monitoring. Evidence collection procedures automated where possible.</p></div></div>
+  <div class="process-step"><div class="step-num">3</div><div class="step-content"><h4>Audit Preparation</h4><p>We compile your evidence package, conduct pre-audit testing, and brief your team. We coordinate with your CPA firm through the entire audit.</p></div></div>
+  <div class="process-step"><div class="step-num">4</div><div class="step-content"><h4>Ongoing Compliance</h4><p>Post-audit, we manage your SOC 2 compliance continuously — monitoring controls, collecting evidence, and preparing for your next Type II audit cycle.</p></div></div>
+</div>
+</div>
+</div></section>
+</div>
+
+
+<!-- ═══════════════════════ INDUSTRY PAGES ═══════════════════════ -->
+
+<!-- ── Financial Services ── -->
+<div class="page" id="page-ind-finance">
+<section class="detail-hero"><div class="container">
+<div class="eyebrow">Industries / Financial Services</div>
+<h1>Cybersecurity for banks, insurers &amp; <em>financial services</em></h1>
+<p class="lead">APRA-regulated entities face some of the most demanding cybersecurity requirements in Australia. CypherLeap provides end-to-end security, compliance, and risk management purpose-built for the financial services sector — from CPS 234 compliance to 24/7 threat monitoring and beyond.</p>
+<div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-primary" onclick="showPage('contact')">Speak to Our Financial Services Team →</a></div>
+</div></section>
+<section class="section"><div class="container">
+<div class="page-with-sidebar">
+<div class="content-block">
+
+<h2>The financial services <em>threat landscape</em></h2>
+<p>Financial services organisations are among the most targeted sectors globally. The combination of high-value data, real-time transaction systems, complex supply chains, and stringent regulatory oversight creates a uniquely challenging security environment. A single breach can trigger APRA reporting obligations, reputational damage, regulatory sanctions, and direct financial losses.</p>
+<p>Mid-market financial services firms — community banks, credit unions, specialty insurers, boutique fund managers, and fintech companies — face the same threats and regulatory requirements as the Big Four, but without the same security budgets or in-house expertise.</p>
+
+<h3>Regulatory requirements we address</h3>
+<ul>
+  <li><strong>APRA CPS 234</strong> — Information security capability, control testing, third-party management, and incident notification</li>
+  <li><strong>APRA CPS 230</strong> — Operational resilience, business continuity, and critical operations</li>
+  <li><strong>PCI DSS 4.0</strong> — Payment card data security for organisations that process, store, or transmit cardholder data</li>
+  <li><strong>ASD Essential Eight</strong> — Baseline cybersecurity controls increasingly expected by APRA as a minimum</li>
+  <li><strong>Privacy Act 1988</strong> — Protection of personal information and mandatory data breach notification</li>
+  <li><strong>ASIC expectations</strong> — Cyber resilience expectations for market participants and licensees</li>
+</ul>
+
+<h3>How CypherLeap supports financial services</h3>
+<div class="feature-grid">
+  <div class="feature-item"><h4><span class="fi-dot"></span> CPS 234 Compliance Program</h4><p>End-to-end CPS 234 compliance — gap assessment, information security capability build, control testing program, third-party assurance, and incident response readiness.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> 24/7 SIEM &amp; Threat Monitoring</h4><p>Financial-grade security monitoring with real-time detection of credential theft, account takeover attempts, insider threats, and advanced persistent threats targeting financial systems.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> vCISO for Financial Services</h4><p>A vCISO who understands APRA's prudential standards, speaks the language of financial regulators, and can represent your security posture to the board and to APRA.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Transaction Security</h4><p>Securing payment systems, online banking platforms, trading systems, and client portals. PCI DSS compliance, API security, and fraud detection integration.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Third-Party Risk Management</h4><p>CPS 234 requires oversight of third-party information security. We assess your critical vendors, manage your third-party risk register, and ensure supply chain compliance.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Incident Response &amp; APRA Notification</h4><p>Incident response planning, tabletop exercises, and managed incident response that includes APRA notification support within the 72-hour mandatory timeframe.</p></div>
+</div>
+
+<div class="testimonial" style="margin-top:40px">
+  <blockquote>"CypherLeap helped us achieve full CPS 234 compliance in under four months. Their team understood APRA's expectations from day one and delivered a compliance program that impressed our external auditors."</blockquote>
+  <div class="t-author"><div class="t-avatar">MD</div><div><div class="t-name">Managing Director</div><div class="t-role">Boutique Lending Firm · 120 employees · APAC</div></div></div>
+</div>
+
+<div class="cta-inline">
+  <h3>Protect your financial <em>institution</em></h3>
+  <p>Book a free consultation to discuss your APRA compliance obligations and security posture.</p>
+  <a class="btn btn-primary" onclick="showPage('contact')">Talk to Financial Services Team →</a>
+</div>
+</div>
+<div class="sidebar">
+  <div class="sidebar-card">
+    <h4>Key Frameworks</h4>
+    <div class="sc-list">
+      <a onclick="showPage('cps234')">APRA CPS 234</a>
+      <a onclick="showPage('pcidss')">PCI DSS 4.0</a>
+      <a onclick="showPage('essential8')">Essential Eight</a>
+      <a onclick="showPage('iso27001')">ISO 27001</a>
+      <a onclick="showPage('nist')">NIST CSF</a>
+    </div>
+  </div>
+  <div class="sidebar-card">
+    <h4>Relevant Services</h4>
+    <div class="sc-list">
+      <a onclick="showPage('vciso')">Virtual CISO</a>
+      <a onclick="showPage('mgrc')">Managed GRC</a>
+      <a onclick="showPage('siem')">Managed SIEM</a>
+      <a onclick="showPage('cti')">CTI &amp; EASM</a>
+    </div>
+  </div>
+</div>
+</div>
+</div></section>
+</div>
+
+<!-- ── Legal ── -->
+<div class="page" id="page-ind-legal">
+<section class="detail-hero"><div class="container">
+<div class="eyebrow">Industries / Legal</div>
+<h1>Cybersecurity for <em>law firms</em> &amp; legal teams</h1>
+<p class="lead">Law firms hold some of the most sensitive information in any industry — client matters, M&A intelligence, litigation strategy, and privileged communications. A breach doesn't just cost money; it destroys client trust and can trigger professional liability. CypherLeap provides cybersecurity built for the unique demands of legal practice.</p>
+<div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-primary" onclick="showPage('contact')">Secure Your Firm →</a></div>
+</div></section>
+<section class="section"><div class="container">
+<div class="content-block" style="max-width:860px">
+<h2>Why law firms are <em>prime targets</em></h2>
+<p>Law firms are attractive targets because they hold concentrated, high-value information — often spanning multiple clients and industries. Attackers target law firms for M&A intelligence, litigation strategy, intellectual property, financial records, and personal information that can be used for extortion, insider trading, or competitive advantage.</p>
+<p>The legal sector has also been historically underinvested in cybersecurity compared to financial services or healthcare. Many firms rely on legacy practice management systems, have limited IT security staff, and face cultural resistance to security controls that are perceived as slowing down billable work.</p>
+
+<h3>How CypherLeap protects law firms</h3>
+<div class="feature-grid">
+  <div class="feature-item"><h4><span class="fi-dot"></span> Client Confidentiality Protection</h4><p>Encryption at rest and in transit, matter-based access controls, secure document management, and data loss prevention to protect client privilege and confidentiality.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Email Security &amp; Encryption</h4><p>Advanced email security including anti-phishing, impersonation protection, email encryption for sensitive communications, and secure file sharing for large document transfers.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Vendor Security Questionnaires</h4><p>Enterprise clients increasingly require their law firms to complete security questionnaires. We help you respond accurately and implement the controls needed to win and retain major clients.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> ISO 27001 Certification</h4><p>The most credible way to demonstrate your firm's security maturity. We build your ISMS and achieve certification — increasingly a differentiator when competing for major mandates.</p></div>
+</div>
+
+<div class="cta-inline">
+  <h3>Protect your clients' <em>confidence</em></h3>
+  <p>Book a confidential consultation to discuss your firm's security posture.</p>
+  <a class="btn btn-primary" onclick="showPage('contact')">Talk to Our Legal Team →</a>
+</div>
+</div>
+</div></section>
+</div>
+
+<!-- ── Healthcare ── -->
+<div class="page" id="page-ind-healthcare">
+<section class="detail-hero"><div class="container">
+<div class="eyebrow">Industries / Healthcare</div>
+<h1>Cybersecurity for <em>healthcare</em> providers</h1>
+<p class="lead">Patient data is among the most sensitive information in existence — and healthcare is one of the most targeted sectors globally. CypherLeap provides cybersecurity and compliance services purpose-built for hospitals, clinics, allied health providers, healthtech companies, and aged care organisations.</p>
+<div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-primary" onclick="showPage('contact')">Protect Your Patients →</a></div>
+</div></section>
+<section class="section"><div class="container">
+<div class="content-block" style="max-width:860px">
+<h2>Healthcare's unique <em>security challenges</em></h2>
+<p>Healthcare organisations operate in a uniquely complex environment: legacy medical systems that can't be easily patched, a diverse workforce including contractors and visiting specialists, 24/7 operations that can't tolerate downtime, connected medical devices with minimal built-in security, and strict privacy obligations under the Privacy Act, the Notifiable Data Breaches scheme, My Health Records Act, and OAIC oversight.</p>
+<p>Ransomware attacks on healthcare providers have increased dramatically, with attackers specifically targeting the sector because the urgency of patient care makes organisations more likely to pay ransoms quickly.</p>
+
+<h3>How CypherLeap protects healthcare</h3>
+<div class="feature-grid">
+  <div class="feature-item"><h4><span class="fi-dot"></span> Patient Data Protection</h4><p>Comprehensive controls for electronic health records, patient management systems, and clinical data. Encryption, access controls, audit logging, and data loss prevention.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Ransomware Resilience</h4><p>Hardened defences against ransomware including network segmentation, backup verification, endpoint protection, email security, and incident response planning specific to healthcare scenarios.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Medical Device Security</h4><p>Risk assessment and network segmentation for connected medical devices, IoT health monitors, and clinical systems that cannot be traditionally patched.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Compliance &amp; Privacy</h4><p>Privacy Act &amp; APPs, Notifiable Data Breaches scheme, My Health Records Act, Essential 8 maturity uplift, and ISO 27001 certification for healthcare organisations across Australia and APAC.</p></div>
+</div>
+</div>
+</div></section>
+</div>
+
+<!-- ── Government & Critical Infrastructure ── -->
+<div class="page" id="page-ind-profserv">
+<section class="detail-hero"><div class="container">
+<div class="eyebrow">Industries / Government &amp; Critical Infrastructure</div>
+<h1>Cybersecurity for <em>state government</em> &amp; critical infrastructure operators</h1>
+<p class="lead">State agencies, infrastructure operators, and publicly-funded programmes operate under the strictest assurance and reporting expectations in Australia. CypherLeap delivers programs aligned to the ISM, PSPF, IRAP, and the SOCI Act — built and assessed by accredited practitioners who have worked inside these environments, not just consulted into them.</p>
+<div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-primary" onclick="showPage('contact')">Discuss Your Assurance Roadmap →</a></div>
+</div></section>
+<section class="section"><div class="container">
+<div class="content-block" style="max-width:860px">
+<h2>Built for the assurance bar set by <em>ASD, Home Affairs &amp; sector regulators</em></h2>
+<p>For state agencies, government-adjacent operators, and the critical infrastructure entities now captured under the SOCI Act, security obligations are fixed by the regulator and enforced through audit findings, mandatory incident reporting, and ministerial accountability. ISM controls, PSPF principles, IRAP-assessed environments, and CIRMP attestation are baseline expectations — not aspirations. CypherLeap delivers against that bar with the accreditations and practitioner depth those programs demand: ASD-endorsed IRAP assessors, ISO 27001 Lead Auditors and Implementers, and senior consultants who have built and operated security functions inside Australian state government and critical infrastructure environments.</p>
+
+<h3>How CypherLeap supports government &amp; critical infrastructure</h3>
+<div class="feature-grid">
+  <div class="feature-item"><h4><span class="fi-dot"></span> IRAP Assessment &amp; Readiness</h4><p>Both preparation and the formal assessment under one roof. With an ASD-endorsed IRAP assessor on the team, we scope, gap-assess, remediate, and assess systems handling OFFICIAL:Sensitive and PROTECTED information.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> ISM, PSPF &amp; ISMS Programs</h4><p>Implementation and ongoing operation of Information Security Manual controls, Protective Security Policy Framework alignment, and the policy and governance scaffolding that holds them together.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> SOCI Act &amp; CIRMP Programs</h4><p>Critical infrastructure obligations under the SOCI Act — Risk Management Program design, CIRMP attestation support, sector-specific incident reporting workflows, and ongoing maturity assessments.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Essential Eight Maturity Uplift</h4><p>ACSC baseline mitigation strategies implemented, monitored, and uplifted to the maturity level your sector and your minister expect.</p></div>
+</div>
+</div>
+</div></section>
+</div>
+
+<!-- ── Professional & Industrial Services ── -->
+<div class="page" id="page-ind-saas">
+<section class="detail-hero"><div class="container">
+<div class="eyebrow">Industries / Professional &amp; Industrial Services</div>
+<h1>Cybersecurity for <em>consulting firms</em>, SaaS, manufacturers &amp; PE-backed organisations</h1>
+<p class="lead">Consulting firms, SaaS providers, manufacturers, and PE-backed companies face security pressure from the same direction — supply chain and procurement risk reviews, due diligence on transactions, and investor or board governance expectations. CypherLeap builds the certifications, controls, and continuous compliance programs that turn security from a procurement bottleneck into a sales accelerator.</p>
+<div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-primary" onclick="showPage('contact')">Build Your Security Program →</a></div>
+</div></section>
+<section class="section"><div class="container">
+<div class="page-with-sidebar">
+<div class="content-block">
+
+<h2>Compliance unlocks <em>supply chain access</em> &amp; investor confidence</h2>
+<p>For consulting firms and SaaS providers, the question is the same — your enterprise prospect or your acquirer's diligence team needs ISO 27001, SOC 2, or both before they sign. For manufacturers, supply chain attestations and OT security questionnaires increasingly gate Tier 1 contracts. For PE-backed companies, security is a value driver, an exit consideration, and a board reporting line item — all at once.</p>
+<p>The common theme: security has moved from an internal risk function to an external commercial qualifier. CypherLeap is built for that transition. We take companies from zero certification to ISO 27001, SOC 2, and Essential Eight maturity — fast — and then operate the controls so your team stays focused on the work that drives revenue.</p>
+
+<h3>Purpose-built for professional &amp; industrial services</h3>
+<div class="feature-grid">
+  <div class="feature-item"><h4><span class="fi-dot"></span> ISO 27001 Certification</h4><p>Full ISMS build, gap analysis, JAS-ANZ-accredited certification body coordination, and ongoing surveillance audit support. The international standard most enterprise procurement teams expect first.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> SOC 2 Type II Certification</h4><p>Trust Service Criteria scoping, control implementation, automated evidence collection (Drata, Vanta, etc.), and Type II audit preparation. The certification that unlocks US enterprise sales.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Essential Eight Maturity</h4><p>The ACSC baseline most Australian enterprise procurement teams now reference, even outside government. Implementation and maturity scoring against your sector's expected level.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Supply Chain &amp; Vendor Risk</h4><p>Vendor due diligence programs, third-party risk assessments, and the security questionnaire response library that stops your sales team losing weeks to procurement reviews.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> M&amp;A &amp; Diligence Readiness</h4><p>Pre-transaction security posture assessments, exit-readiness programs, and board-level reporting that withstands acquirer scrutiny — built for PE-backed companies preparing for the next funding round or exit.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Penetration Testing</h4><p>CREST-accredited application, infrastructure, and cloud testing. For SaaS providers, deep manual testing of business logic, multi-tenant isolation, and API security; for manufacturers, OT/IT boundary testing.</p></div>
+</div>
+</div>
+<div class="sidebar">
+  <div class="sidebar-card">
+    <h4>Security Stack</h4>
+    <div class="sc-list">
+      <a onclick="showPage('iso27001')">ISO 27001</a>
+      <a onclick="showPage('soc2')">SOC 2 Type II</a>
+      <a onclick="showPage('essential8')">Essential Eight</a>
+      <a onclick="showPage('pentest')">Penetration Testing</a>
+      <a onclick="showPage('vciso')">vCISO</a>
+    </div>
+  </div>
+</div>
+</div>
+</div></section>
+</div>
+
+
+<!-- ═══════════════════════ ABOUT PAGE ═══════════════════════ -->
+<div class="page" id="page-about">
+<section class="detail-hero"><div class="container">
+<div class="eyebrow">About CypherLeap</div>
+<h1>Cybersecurity built for <em>high-growth companies</em>.</h1>
+<p class="lead">CypherLeap is a founder-led Australian cybersecurity firm focused on mid-market organisations operating in regulated and high-accountability environments. Enterprise-grade capability, delivered with the precision and accountability mid-market organisations require — by senior practitioners with hands-on experience across state government, critical infrastructure, and regulated healthcare.</p>
+</div></section>
+<section class="section"><div class="container">
+<div class="content-block" style="max-width:860px">
+
+<h2>Our <em>mission</em></h2>
+<p>To give every Australian and APAC mid-market organisation access to the same caliber of cybersecurity expertise, accreditation, and compliance programs that the largest enterprises rely on — delivered at a price point, engagement model, and speed that actually fits regulated mid-market reality.</p>
+
+</div>
+</div></section>
+
+<!-- Leadership -->
+<section class="leadership">
+<div class="container">
+<div class="leadership-header fade-up">
+  <div class="eyebrow">Leadership</div>
+  <h2>The people <em>running your program</em>.</h2>
+  <p>Three practice leads, one accountable team. Every engagement is owned end-to-end by one of them — no layered sales teams, no bait-and-switch between who sells and who delivers.</p>
+</div>
+
+<div class="leadership-grid">
+
+  <!-- Muralee Krishnan -->
+  <div class="leader-card fade-up">
+    <div class="leader-photo">
+      <img src="images/team/Muralee%20Krishnan.png" alt="Muralee Krishnan, IRAP Practice Lead at CypherLeap" onerror="this.closest('.leader-photo').classList.add('photo-missing');this.outerHTML='<span class=&quot;photo-fallback&quot;>MK</span>'" />
+    </div>
+    <div class="leader-name">Muralee Krishnan</div>
+    <div class="leader-role">IRAP Practice Lead</div>
+    <p class="leader-bio">MK leads CypherLeap's IRAP practice — preparing organisations for Australian Government security assessment and the handling of OFFICIAL:Sensitive and PROTECTED information. IRAP assessor, ex-PCI DSS QSA, CISA, CDPSE, and ISO 27001 Lead Implementer.</p>
+    <div class="leader-links">
+      <a><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>LinkedIn</a>
+    </div>
+  </div>
+
+  <!-- Ananthu Shaji -->
+  <div class="leader-card fade-up">
+    <div class="leader-photo">
+      <img src="images/team/Ananthu.png" alt="Ananthu Shaji, Director and Defensive Security Practice Lead at CypherLeap" onerror="this.closest('.leader-photo').classList.add('photo-missing');this.outerHTML='<span class=&quot;photo-fallback&quot;>AS</span>'" />
+    </div>
+    <div class="leader-name">Ananthu Shaji</div>
+    <div class="leader-role">Director · Defensive Security Practice</div>
+    <p class="leader-bio">Ananthu leads the defensive side of the house — managed SIEM, CTI &amp; EASM, vCISO engagements, and the GRC programs that keep clients audit-ready. IRAP assessor, PCI DSS QSA, CISM, CDPSE, ISO 27001 Lead Auditor, and ISO 42001 Lead Implementer.</p>
+    <div class="leader-links">
+      <a><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>LinkedIn</a>
+    </div>
+  </div>
+
+  <!-- Nitesh Bhatta -->
+  <div class="leader-card fade-up">
+    <div class="leader-photo">
+      <img src="images/team/Nitesh.png" alt="Nitesh Bhatta, Offensive Security Practice Lead at CypherLeap" onerror="this.closest('.leader-photo').classList.add('photo-missing');this.outerHTML='<span class=&quot;photo-fallback&quot;>NB</span>'" />
+    </div>
+    <div class="leader-name">Nitesh Bhatta</div>
+    <div class="leader-role">Principal Consultant · Offensive Security</div>
+    <p class="leader-bio">Nitesh runs the offensive security practice. Penetration testing, red teaming, and social-engineering engagements, including the vishing simulation featured in our case studies.</p>
+    <div class="leader-links">
+      <a><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>LinkedIn</a>
+    </div>
+  </div>
+
+  <!-- Sebastian -->
+  <div class="leader-card fade-up">
+    <div class="leader-photo">
+      <img src="images/team/Sebastian.png" alt="Sebastian, Strategic Partnership Manager at CypherLeap" onerror="this.closest('.leader-photo').classList.add('photo-missing');this.outerHTML='<span class=&quot;photo-fallback&quot;>SB</span>'" />
+    </div>
+    <div class="leader-name">Sebastian Torres</div>
+    <div class="leader-role">Strategic Partnership Manager</div>
+    <p class="leader-bio">Sebastian runs strategic partnerships — building the alliance ecosystem, vendor relationships, and channel programs that let CypherLeap deliver at scale across regions.</p>
+    <div class="leader-links">
+      <a><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>LinkedIn</a>
+    </div>
+  </div>
+
+</div>
+</div>
+</section>
+
+<section class="section"><div class="container">
+<div class="content-block" style="max-width:860px">
+
+<h2>What makes us <em>different</em></h2>
+<div class="feature-grid">
+  <div class="feature-item"><h4><span class="fi-dot"></span> Mid-Market Specialists</h4><p>We work with organisations of 100&ndash;1,500 staff and AUD $50M&ndash;$1B revenue — typically with board-level security oversight, no fully mature internal security function, and their first serious compliance deadlines on the horizon.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Full-Stack Security</h4><p>vCISO, GRC, SIEM, CTI, pen testing, and IT operations — all from one team. One vendor, one relationship, one team that knows your environment as well as your engineers do.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Execution, Not Advice</h4><p>We don't deliver PowerPoints and walk away. We build your ISMS. We configure your SIEM. We write your policies. We get you certified. We run it ongoing.</p></div>
+  <div class="feature-item"><h4><span class="fi-dot"></span> Australian-First, APAC-Fluent</h4><p>We speak the language of IRAP, Essential 8, APRA CPS 234 &amp; CPS 230, the Privacy Act, SOCI Act, ISM, PSPF, and ISO 27001 — and of the regulators behind them. Built locally, with the credentials to back it.</p></div>
+</div>
+
+<h2>Our <em>certifications</em></h2>
+<p>Our team holds industry-leading certifications across security, governance, audit, and architecture:</p>
+<ul>
+  <li><strong>IRAP</strong> — Infosec Registered Assessors Program (ASD-endorsed)</li>
+  <li><strong>PCI DSS QSA</strong> — Qualified Security Assessor</li>
+  <li><strong>CISM</strong> — Certified Information Security Manager (ISACA)</li>
+  <li><strong>CISA</strong> — Certified Information Systems Auditor (ISACA)</li>
+  <li><strong>CRISC</strong> — Certified in Risk and Information Systems Control (ISACA)</li>
+  <li><strong>CDPSE</strong> — Certified Data Privacy Solutions Engineer (ISACA)</li>
+  <li><strong>ISO/IEC 27001 Lead Auditor</strong> &amp; <strong>Lead Implementer</strong></li>
+  <li><strong>ISO/IEC 42001 Lead Implementer</strong> — AI Management Systems</li>
+  <li><strong>CRTP</strong> — Certified Red Team Professional</li>
+  <li><strong>TOGAF</strong> — Enterprise Architecture</li>
+  <li><strong>Rapid7 InsightIDR Certified Specialist</strong></li>
+  <li><strong>AlienVault Certified Security Engineer (ACSE)</strong></li>
+  <li><strong>Cato DSE Level 2</strong> · <strong>SOCRadar CTI Analyst</strong></li>
+</ul>
+</div>
+</div></section>
+
+<!-- Team culture photo -->
+<section class="team-culture">
+<div class="container">
+<div class="team-culture-frame fade-up">
+  <img src="images/team/team.jpeg" alt="The CypherLeap team — Christmas 2024 stay" onerror="this.closest('.team-culture-frame').classList.add('photo-missing');this.remove()" />
+</div>
+<div class="team-culture-caption">
+  <div class="cap-title">The people who'll actually pick up the phone.</div>
+  <div class="cap-meta">The CypherLeap team · Christmas 2024</div>
+</div>
+</div>
+</section>
+</div>
+
+<!-- ═══════════════════════ CASE STUDIES PAGE ═══════════════════════ -->
+<div class="page" id="page-case-studies">
+
+<section class="case-page-hero">
+<div class="container">
+<div class="eyebrow">Case Studies</div>
+<h1>Work we've done. <em>Results we can prove.</em></h1>
+<p class="lead" style="max-width:680px">Real engagements, real methodology, real numbers. Client identities and identifying system detail stay confidential — discretion is part of the job.</p>
+</div>
+</section>
+
+<!-- Featured case study: Critical Healthcare Infrastructure Operator — Vishing Simulation -->
+<section class="section"><div class="container">
+
+<article class="content-block" style="max-width:920px">
+
+<div class="case-tags">
+  <span class="tag">Offensive Security</span>
+  <span class="tag">Social Engineering</span>
+  <span class="tag">Healthcare</span>
+  <span class="tag">Vishing Simulation</span>
+</div>
+
+<h2 style="font-size:clamp(2rem,3.6vw,3rem);line-height:1.05;letter-spacing:-.02em;margin-bottom:16px">Two phone calls inside a critical healthcare infrastructure operator. Four systems <em>compromised</em>.</h2>
+
+<div style="display:flex;gap:32px;flex-wrap:wrap;color:var(--ink-mute);font-size:.9rem;margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid var(--line)">
+  <div><strong style="color:var(--ink);margin-right:6px">Client</strong> Critical Healthcare Infrastructure Operator (anonymised)</div>
+  <div><strong style="color:var(--ink);margin-right:6px">Sector</strong> Healthcare</div>
+  <div><strong style="color:var(--ink);margin-right:6px">Engagement</strong> Social Engineering, Vishing Simulation</div>
+  <div><strong style="color:var(--ink);margin-right:6px">Delivered by</strong> CypherLeap Offensive Security Services</div>
+</div>
+
+<h3>Why the client ran this</h3>
+<p>The client identified human risk as the single most material element of its cyber risk profile. Its Service Desk and frontline customer-facing functions sit on the front line, interacting constantly with internal users and external referrers, both of which make them high-value targets for impersonation and authority-pressure tactics.</p>
+<p>The context mattered. In mid-2025 the Scattered Spider cybercrime group intensified its campaign against Australian enterprises using the exact playbook the client's teams were most exposed to: help-desk impersonation, MFA manipulation, and credential abuse. The group had been linked to a significant breach at Qantas that exposed data for roughly 6 million customers. The client was already seeing external impersonation attempts against its staff over Microsoft Teams.</p>
+<p>Rather than wait for those probes to escalate, the client's Security Operations team engaged CypherLeap to run a controlled, unannounced social-engineering resilience assessment, calibrated to mirror real-world threat actor behaviour without disrupting clinical or business operations.</p>
+
+<h3>The brief</h3>
+<ul>
+  <li>Validate frontline-team resilience against voice social-engineering attacks calibrated to Scattered-Spider-class tradecraft.</li>
+  <li>Gain initial access through the Service Desk and customer-facing support functions, then demonstrate the downstream business impact.</li>
+  <li>Run the exercise with only three client stakeholders aware in advance, with no broader awareness within the workforce.</li>
+  <li>Produce a prioritised, actionable set of remediation recommendations the security function could implement immediately.</li>
+</ul>
+
+<h3>Methodology</h3>
+<p>We delivered the engagement over six working days, structured through the offensive-security lifecycle we apply to every social-engineering assessment: <strong>Intelligence Gathering · Get In · Stay In · Act · Report · Debrief · Training</strong>.</p>
+<p>Open-source intelligence gathering built a target profile across technical teams, support staff, medical specialists, front-desk staff and management. The profile covered direct mobile numbers, residency locations, practitioner registration details, practice locations and personal email addresses, all verified against a client key contact. In parallel we enumerated the client's application footprint: a Service Desk ticketing platform, the patient imaging portal, a Radiology Information System (RIS), a remote desktop environment, and the referrer-facing patient portals. Publicly-accessible support documentation and how-to guides surfaced the IT Support Desk phone numbers we would later dial.</p>
+<p>Two pretexts were chosen, one impersonating a Medical Practitioner and one impersonating a Contact Centre Agent. Each was deliberately engineered with multiple red flags stacked against it: urgency, authority pressure, access requests from unusual geographies, unrecognised mobile numbers, and personal email addresses that did not match the client's internal records.</p>
+
+<div class="case-stat-row">
+  <div class="case-stat-item">
+    <div class="cs-num"><em>2</em>/2</div>
+    <div class="cs-label">pretexts successfully granted initial access and persistent foothold</div>
+  </div>
+  <div class="case-stat-item">
+    <div class="cs-num">6<em> days</em></div>
+    <div class="cs-label">total engagement window including OSINT, calls, debrief, and report</div>
+  </div>
+  <div class="case-stat-item">
+    <div class="cs-num">18<em> min</em></div>
+    <div class="cs-label">longest single call to complete credential reset and MFA takeover</div>
+  </div>
+  <div class="case-stat-item">
+    <div class="cs-num"><em>4</em></div>
+    <div class="cs-label">sensitive systems reached — Imaging Portal, M365, Remote Desktop, Outlook</div>
+  </div>
+</div>
+
+<h3>Case one. Medical Practitioner impersonation</h3>
+<p>We dialled the client's customer-facing support line in the morning under the pretext of a Medical Practitioner at an airport, about to board a flight, needing urgent help with a broken login. The staff member on the call needed access to the imaging portal to review patient scans. The pretext stacked five red flags, including mismatched mobile number and an unverified personal email as the destination for credentials.</p>
+<p>Inside 18 minutes on the phone, the credentials (username and password) were sent to a CypherLeap-controlled inbox in two separate emails. Before the support call had ended, our team had registered MFA on our own device, locking the legitimate practitioner out of their account while maintaining persistent access for us. From there we gained entry to the imaging portal, changed the account's primary email and primary mobile number to CypherLeap-controlled destinations, and performed a proof-of-concept patient search to demonstrate the full business impact. Patient-data exfiltration, persistent access, and extortion would all have been in reach of a real attacker.</p>
+
+<h3>Case two. Contact Centre Agent impersonation</h3>
+<p>Later the same day, we dialled the IT Support line under a second pretext: a newly-joined Contact Centre Agent trying to set up Office 365 on a new mobile phone, unable to log in, asking for a password reset. The scenario stacked its own red flags. A first login attempt from a different city to where the staff member was actually based, an unrecognised device, and a mobile number not on the client's records.</p>
+<p>The new password was set and handed over during the call with no out-of-band identity verification. We then reset the MFA binding to our own device and took persistent control of the corporate Outlook account, and from there the user's OneDrive, SharePoint libraries, Microsoft Teams channels, and the remote desktop environment. The entire sequence demonstrated what a real Scattered-Spider-style operator would achieve in a single afternoon: corporate data exfiltration, sustained lateral-movement potential, and a functioning launchpad for internal social engineering via Teams.</p>
+
+<h3>What we also found</h3>
+<p>During OSINT we surfaced leaked credentials from historical third-party breaches belonging to former employees of the client. The accounts themselves had been properly disabled and remediated long ago, and none of the credentials were actually exploitable. But their continued presence on credential-leak sites is the raw material a Scattered-Spider-class attacker uses to appear credible during a pretext call. That residual exposure, combined with insufficient caller-verification at the Service Desk, is exactly the combination that turns OSINT noise into an operational breach.</p>
+
+<h3>Strategic recommendations</h3>
+<p>The report handed to the client included a full set of remediation recommendations. The highest-leverage controls for any organisation facing the same threat pattern:</p>
+<ul>
+  <li><strong>Callback-before-action.</strong> A mandatory policy for verifying the identity of anyone requesting sensitive information or action (credential reset, MFA reset, access grant) over the phone, by calling back on a verified internal directory number, never the number provided by the requester.</li>
+  <li><strong>Self-service password reset or a Secure Service Desk solution</strong> to remove the human from the highest-volume credential-reset workflow entirely.</li>
+  <li><strong>Periodic realistic simulation exercises</strong> across vishing, phishing, and SMS to measure frontline resilience continuously, not annually.</li>
+  <li><strong>Regular, role-tailored training</strong> for staff in customer-facing positions on impersonation, pretexting, and urgency cues across every communication channel.</li>
+  <li><strong>A clear data-classification policy</strong> that defines which business information is sensitive, confidential, or public, and matches it to appropriate communication channels so highly sensitive data is never shared via unverified calls or emails.</li>
+  <li><strong>Network segmentation and rigorous least privilege</strong> so that if a social-engineering attack compromises a single endpoint, lateral movement is constrained.</li>
+  <li><strong>EDR on every endpoint</strong> and a strict automated patching schedule — the controls that reduce the blast radius after initial access.</li>
+  <li><strong>A non-punitive reporting system</strong> for suspicious communications, paired with an incident-response function that can triage and respond quickly.</li>
+</ul>
+
+<h3>Operational safety</h3>
+<p>No business operations were disrupted during the assessment. Compromised accounts were promptly restored with support from the client's internal contacts. At no point was actual patient or corporate data accessed, and all systems and information managed within the client environment remained intact throughout the engagement.</p>
+
+<div class="cta-inline">
+  <h3>Considering a vishing or social-engineering <em>assessment</em>?</h3>
+  <p>We run engagements scoped from a targeted helpdesk test through to multi-week campaigns spanning voice, email, SMS, and physical vectors. Let's talk about what the right exercise looks like for your threat model.</p>
+  <a class="btn btn-primary" onclick="showPage('contact')">Scope an engagement →</a>
+</div>
+
+<p style="font-size:.8rem;color:var(--ink-faint);margin-top:32px;padding-top:20px;border-top:1px solid var(--line-soft)">Published in anonymised form to protect the client's identity. Operational detail, screenshots, dates, and staff-identifying information from the full engagement report are available only under NDA to prospective clients with a legitimate assessment need.</p>
+
+</article>
+
+<!-- Next studies preview -->
+<div style="margin-top:80px;padding-top:48px;border-top:1px solid var(--line)">
+  <div style="font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-faint);font-weight:600;margin-bottom:28px">More case studies — coming soon</div>
+  <div class="grid-3">
+    <div class="card" style="opacity:.7">
+      <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <h3>Managed SIEM at scale, critical healthcare infrastructure operator</h3>
+      <p><span class="placeholder">[Summary to be published: continuous detection and response across a national imaging-provider footprint. Scope, mean time to detect, and how we integrated with their existing IR playbook.]</span></p>
+      <div class="card-link">In preparation</div>
+    </div>
+    <div class="card" style="opacity:.7">
+      <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg></div>
+      <h3>Aged-care platform compliance program — Mirus Australia</h3>
+      <p><span class="placeholder">[Summary to be published: building a defensible security &amp; privacy posture across an aged-care software platform handling sensitive resident data.]</span></p>
+      <div class="card-link">In preparation</div>
+    </div>
+    <div class="card" style="opacity:.7">
+      <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><circle cx="6" cy="6" r="1"/><circle cx="6" cy="18" r="1"/></svg></div>
+      <h3>Private practice cyber program — CMH Practice Management</h3>
+      <p><span class="placeholder">[Summary to be published: small-footprint, high-sensitivity healthcare practice — how we built a right-sized security posture without enterprise bloat.]</span></p>
+      <div class="card-link">In preparation</div>
+    </div>
+  </div>
+</div>
+
+</div></section>
+
+</div>
+
+<!-- ═══════════════════════ RESOURCES PAGE ═══════════════════════ -->
+<div class="page" id="page-resources">
+<section class="detail-hero"><div class="container">
+<div class="eyebrow">Resources</div>
+<h1>Insights, guides &amp; <em>cybersecurity intelligence</em></h1>
+<p class="lead">Expert analysis, practical guides, and the latest intelligence from CypherLeap's SOC and advisory team. Stay ahead of the threats and regulations that matter across the markets you operate in.</p>
+</div></section>
+<section class="section"><div class="container">
+<div class="grid-3">
+  <div class="card"><div style="display:flex;gap:8px;margin-bottom:16px"><span class="tag">IRAP</span><span class="tag">Guide</span></div><h3>The IRAP Readiness Checklist: A Practical Guide for Australian Tech Vendors</h3><p>Everything you need to know about IRAP scope, OFFICIAL:Sensitive vs PROTECTED, ISM mapping, and the documentation evidence ASD-endorsed assessors look for.</p><div class="card-link">Read more →</div></div>
+  <div class="card"><div style="display:flex;gap:8px;margin-bottom:16px"><span class="tag">CPS 230</span><span class="tag">Compliance</span></div><h3>APRA CPS 230 for Financial Services: What the July 2025 Deadline Means</h3><p>Operational risk management under CPS 230 — what's required for material service provider risk, business continuity, and how it overlaps with CPS 234.</p><div class="card-link">Read more →</div></div>
+  <div class="card"><div style="display:flex;gap:8px;margin-bottom:16px"><span class="tag">Essential 8</span><span class="tag">Maturity</span></div><h3>From Essential Eight Maturity Level 1 to 2: A 90-Day Roadmap</h3><p>A practitioner's guide to the controls that actually move the needle — application control, patching cadence, MFA, and what auditors really look for.</p><div class="card-link">Read more →</div></div>
+  <div class="card"><div style="display:flex;gap:8px;margin-bottom:16px"><span class="tag">Threat Intel</span></div><h3>2026 APAC Cyber Threat Landscape Report</h3><p>Our annual analysis of threats targeting Australian and APAC mid-market organisations — ransomware trends, supply-chain compromises, and sector-specific risks across healthcare, government, and financial services.</p><div class="card-link">Read more →</div></div>
+  <div class="card"><div style="display:flex;gap:8px;margin-bottom:16px"><span class="tag">ISO 27001</span><span class="tag">Guide</span></div><h3>ISO 27001:2022 vs 2013: What's Changed and What You Need to Do</h3><p>Practical guide to the transition from ISO 27001:2013 to 2022, including the new Annex A structure and timeline requirements.</p><div class="card-link">Read more →</div></div>
+  <div class="card"><div style="display:flex;gap:8px;margin-bottom:16px"><span class="tag">PCI DSS</span></div><h3>PCI DSS 4.0 Future-Dated Requirements: Are You Ready?</h3><p>The requirements that took effect March 2025 and what mid-market businesses processing payments need to do right now.</p><div class="card-link">Read more →</div></div>
+</div>
+</div></section>
+</div>
+
+<!-- ═══════════════════════ CONTACT PAGE ═══════════════════════ -->
+<div class="page" id="page-contact">
+<section class="detail-hero"><div class="container">
+<div class="eyebrow">Contact Us</div>
+<h1>Let's talk about <em>your security</em></h1>
+<p class="lead">Book a free 30-minute discovery call with our team. We'll assess your current posture, discuss your compliance goals, and outline exactly what it takes to get protected — no obligation, no sales pitch.</p>
+</div></section>
+<section class="section"><div class="container">
+<div class="grid-2">
+<div>
+  <div class="card" style="padding:40px">
+    <h3 style="margin-bottom:24px;font-size:1.15rem">Book a Free Consultation</h3>
+    <div style="margin-bottom:20px"><label style="display:block;font-size:.82rem;color:var(--gray);margin-bottom:6px">Full Name</label><input type="text" style="width:100%;padding:12px 16px;background:var(--navy);border:1px solid rgba(26,26,31,.12);border-radius:8px;color:var(--white);font-size:.92rem;font-family:var(--font-body)" placeholder="John Smith"></div>
+    <div style="margin-bottom:20px"><label style="display:block;font-size:.82rem;color:var(--gray);margin-bottom:6px">Work Email</label><input type="email" style="width:100%;padding:12px 16px;background:var(--navy);border:1px solid rgba(26,26,31,.12);border-radius:8px;color:var(--white);font-size:.92rem;font-family:var(--font-body)" placeholder="you@company.com"></div>
+    <div style="margin-bottom:20px"><label style="display:block;font-size:.82rem;color:var(--gray);margin-bottom:6px">Company</label><input type="text" style="width:100%;padding:12px 16px;background:var(--navy);border:1px solid rgba(26,26,31,.12);border-radius:8px;color:var(--white);font-size:.92rem;font-family:var(--font-body)" placeholder="Company name"></div>
+    <div style="margin-bottom:20px"><label style="display:block;font-size:.82rem;color:var(--gray);margin-bottom:6px">Number of Employees</label><select style="width:100%;padding:12px 16px;background:var(--navy);border:1px solid rgba(26,26,31,.12);border-radius:8px;color:var(--gray);font-size:.92rem;font-family:var(--font-body)"><option>50–200</option><option>200–500</option><option>500–2,000</option><option>2,000+</option></select></div>
+    <div style="margin-bottom:24px"><label style="display:block;font-size:.82rem;color:var(--gray);margin-bottom:6px">How can we help?</label><textarea rows="3" style="width:100%;padding:12px 16px;background:var(--navy);border:1px solid rgba(26,26,31,.12);border-radius:8px;color:var(--white);font-size:.92rem;font-family:var(--font-body);resize:vertical" placeholder="Tell us about your security or compliance needs..."></textarea></div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center">Book My Free Consultation →</button>
+  </div>
+</div>
+<div>
+  <div style="margin-bottom:32px">
+    <h3 style="font-size:1.05rem;font-weight:600;margin-bottom:8px">Email</h3>
+    <p style="color:var(--gray)"><a href="mailto:info@cypherleap.com" style="color:var(--teal)">info@cypherleap.com</a></p>
+    <p style="color:var(--gray);font-size:.82rem;margin-top:4px">Commercial enquiries: <a href="mailto:sales@cypherleap.com" style="color:var(--teal)">sales@cypherleap.com</a></p>
+  </div>
+  <div style="margin-bottom:32px">
+    <h3 style="font-size:1.05rem;font-weight:600;margin-bottom:8px">24/7 Incident Hotline</h3>
+    <p style="color:var(--gray)"><a href="mailto:soc@cypherleap.com" style="color:var(--teal)">soc@cypherleap.com</a> · Response within 15 minutes</p>
+    <p style="color:var(--gray);font-size:.82rem;margin-top:4px">For existing clients with an active incident, a phone bridge is included in your engagement.</p>
+  </div>
+  <div style="margin-bottom:32px">
+    <h3 style="font-size:1.05rem;font-weight:600;margin-bottom:8px">Where we work</h3>
+    <p style="color:var(--gray)">Head office: 408/56 Bowman St, Pyrmont NSW 2009. Distributed delivery team across Sydney, Melbourne, and Singapore — supporting clients across Australia, New Zealand, and APAC.</p>
+    <p style="color:var(--gray);font-size:.82rem;margin-top:6px">+61 2 8014 3200</p>
+  </div>
+  <div style="margin-bottom:32px">
+    <h3 style="font-size:1.05rem;font-weight:600;margin-bottom:12px">What to expect</h3>
+    <div class="process-steps">
+      <div class="process-step"><div class="step-num" style="min-width:40px;height:40px;font-size:.78rem">1</div><div class="step-content"><h4 style="font-size:.92rem">Discovery call (30 min)</h4><p style="font-size:.82rem">We learn about your business, your current security posture, and your goals.</p></div></div>
+      <div class="process-step"><div class="step-num" style="min-width:40px;height:40px;font-size:.78rem">2</div><div class="step-content"><h4 style="font-size:.92rem">Assessment &amp; proposal</h4><p style="font-size:.82rem">We provide a tailored assessment and a clear proposal with scope, timeline, and investment.</p></div></div>
+      <div class="process-step"><div class="step-num" style="min-width:40px;height:40px;font-size:.78rem">3</div><div class="step-content"><h4 style="font-size:.92rem">Engagement kickoff</h4><p style="font-size:.82rem">Dedicated team assigned, onboarding completed, and your security program begins.</p></div></div>
+    </div>
+  </div>
+</div>
+</div>
+</div></section>
+</div>
+
+
+<!-- ═══════════════════════ FOOTER (Global) ═══════════════════════ -->
+<footer>
+<div class="container">
+<div class="footer-grid">
+  <div class="footer-about"><div class="logo" onclick="showPage('home')" aria-label="CypherLeap home">
+      <img src="logos/cypherleap-logo.png" alt="CypherLeap" class="logo-img" />
+    </div><p style="margin-top:18px">A founder-led Australian cybersecurity firm. CREST Accredited &middot; PCI DSS QSAC &middot; IRAP &middot; ACSC Network Partner &middot; ISO/IEC 27001:2022. Built for regulated mid-market organisations across Australia and APAC.</p></div>
+  <div class="footer-col"><h5>Solutions</h5><a onclick="showPage('vciso')">Virtual CISO</a><a onclick="showPage('mgrc')">Managed GRC</a><a onclick="showPage('siem')">Managed SIEM</a><a onclick="showPage('cti')">CTI &amp; EASM</a><a onclick="showPage('pentest')">Penetration Testing</a><a onclick="showPage('itsupport')">Managed IT Support</a></div>
+  <div class="footer-col"><h5>Frameworks</h5><a onclick="showPage('irap')">IRAP</a><a onclick="showPage('essential8')">Essential Eight</a><a onclick="showPage('cps234')">APRA CPS 234</a><a onclick="showPage('iso27001')">ISO/IEC 27001:2022</a><a onclick="showPage('pcidss')">PCI DSS 4.0</a><a onclick="showPage('nist')">NIST CSF</a><a onclick="showPage('soc2')">SOC 2</a></div>
+  <div class="footer-col"><h5>Company</h5><a onclick="showPage('about')">About</a><a onclick="showPage('case-studies')">Case Studies</a><a onclick="showPage('resources')">Resources</a><a onclick="showPage('contact')">Contact Us</a><a>Privacy Policy</a><a>Terms of Service</a></div>
+</div>
+<div class="footer-bottom">
+  <span>&copy; 2026 CypherLeap. All rights reserved.</span>
+  <span>Sydney &middot; Melbourne &middot; Singapore</span>
+</div>
+</div>
+</footer>
+
+<script>
+// Navigation
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const page=document.getElementById('page-'+id);
+  if(page){page.classList.add('active');window.scrollTo({top:0,behavior:'instant'});initFadeUp()}
+}
+
+// Navbar scroll
+const nav=document.getElementById('navbar');
+window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>40)});
+
+// Fade-up observer
+function initFadeUp(){
+  const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:.1});
+  document.querySelectorAll('.fade-up:not(.visible)').forEach(el=>obs.observe(el));
+}
+initFadeUp();
+</script>
+</body>
+</html>
